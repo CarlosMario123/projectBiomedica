@@ -1,16 +1,18 @@
 from src.view.frames.inicio import InicioView
 
 class InicioController():
-    def __init__(self,route = None):
-        self.view =  None
-        self.router = route
+    def __init__(self,root):
+        self.root = root
+        self.view = InicioView(master=root,controller=self)
         
-    def getView(self,msg = None):
-        self.view = InicioView(controller=self)
-        return self.view
-        
+    def getView(self):#muestra el frame
+        self.view.show()
     
+    def hide(self):#cierra el frame
+        self.view.hide() 
+        
     def redirectDrivers(self):
-       
-        self.router.moveTo("driver")
+        print("entro")
+        self.root.cambiarVista("choiseD")  
+
         

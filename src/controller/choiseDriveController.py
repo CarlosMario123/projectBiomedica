@@ -1,9 +1,11 @@
 from src.view.frames.ChoiseDriver import ChoiseDriverView
 class ChoiseDriverController():
-    def __init__(self,route = None):
-        self.view =  None
-        self.router = route
+    def __init__(self,root):
+        self.view = ChoiseDriverView(master=root,controller=self)
+        self.root = root
     
-    def getView(self,msg = None):
-        self.view = ChoiseDriverView(controller=self)
-        return self.view
+    def getView(self):
+        self.view.show()
+        
+    def hide(self):#cierra el frame
+        self.view.hide()

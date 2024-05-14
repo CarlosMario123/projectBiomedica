@@ -37,4 +37,3 @@ def createTables():
     conn.close()
 
 
-createTables()
