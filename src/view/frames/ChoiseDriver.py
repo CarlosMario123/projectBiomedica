@@ -6,7 +6,9 @@ class ChoiseDriverView(tk.Frame):
         super().__init__(master)
         self.controller = controller
         self.image2 = None
+     
         self.init_ui()
+        print("dentro")
         
     def init_ui(self):
         self.logoChiapa = LogoChiapas().get_instance(master=self)
@@ -37,11 +39,10 @@ class ChoiseDriverView(tk.Frame):
     
     def show(self):
         self.pack(fill=tk.BOTH, expand=True) 
-        
-        self.pack_forget()
-    
+
     def hide(self):
         self.pack_forget()
-        
-    def actionBtn(self,text):
-        self.controller.selectionOptions(text)    
+
+    def actionBtn(self, text):
+        self.controller.selectionOptions(text)
+   
