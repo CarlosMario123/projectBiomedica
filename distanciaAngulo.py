@@ -63,4 +63,4 @@ while True:
     print(f"Distancia: {distancia_cm} cm")
 
     # Esperar un minuto antes de la próxima lectura
-    time.sleep(60)
+    time.sleep(30)

@@ -1,5 +1,5 @@
 from src.view.frames.ChoiseDriver import ChoiseDriverView
-from bd.getChofer import obtener_choferes
+from bd.chofer.getChofer import obtener_choferes
 class ChoiseDriverController():
     def __init__(self,root):
         self.view = ChoiseDriverView(master=root,controller=self)

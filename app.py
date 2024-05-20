@@ -3,7 +3,7 @@ from src.controller.inicioController import InicioController
 from src.controller.choiseDriveController import ChoiseDriverController
 
 #todo relacionado con sqlite
-from bd.addChofer import llenarChoferes
+from bd.chofer.addChofer import llenarChoferes
 from bd.CreateTables import createTables
 import tkinter as tk
 class Main(tk.Tk):
@@ -47,6 +47,3 @@ app.addFrame(controlador=ChoiseDriverController,clave="choiseD")
 app.asignarPrincipal("inicio")
 
 app.run()
-        
-
-     
