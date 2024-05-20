@@ -11,5 +11,4 @@ class RecorridoController():
         self.view.hide() 
     
     def regresarInicio(self):
-        self.root.cambiarVista("choiseD")  
-             
+        self.root.cambiarVista("choiseD")
