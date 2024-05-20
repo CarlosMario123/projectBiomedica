@@ -38,5 +38,10 @@ class ChoiseDriverView(tk.Frame):
     def show(self):
         self.pack(fill=tk.BOTH, expand=True) 
         
+        self.pack_forget()
+    
     def hide(self):
-        self.pack_forget()    
+        self.pack_forget()
+        
+    def actionBtn(self,text):
+        self.controller.selectionOptions(text)    

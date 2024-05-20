@@ -1,6 +1,7 @@
 #definiremos una clase principal
 from src.controller.inicioController import InicioController
 from src.controller.choiseDriveController import ChoiseDriverController
+from src.controller.RecorridoController import RecorridoController
 
 #todo relacionado con sqlite
 from bd.addChofer import llenarChoferes
@@ -43,7 +44,7 @@ class Main(tk.Tk):
 app = Main()
 app.addFrame(controlador=InicioController,clave="inicio")
 app.addFrame(controlador=ChoiseDriverController,clave="choiseD")
-
+app.addFrame(controlador=RecorridoController,clave="recorrido")
 app.asignarPrincipal("inicio")
 
 app.run()
