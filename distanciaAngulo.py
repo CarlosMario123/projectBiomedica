@@ -1,9 +1,9 @@
-from mpu6050 import mpu6050
+from mpu6050 import MPU6050
 import time
 import RPi.GPIO as GPIO
 
 # Inicialización del objeto mpu para el sensor giroscopio
-mpu = mpu6050(0x68)
+mpu = MPU6050(0x68)
 
 # Configuración inicial del sensor de distancia
 GPIO.setmode(GPIO.BCM)
