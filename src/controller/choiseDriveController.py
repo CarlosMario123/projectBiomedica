@@ -16,8 +16,7 @@ class ChoiseDriverController():
         self.view.hide()
         
     def selectionOptions(self,text):
-        context = ContextChofer()
-        #el nombre del chofer lo guardamos en nuestro contexto guardado para que sea accessible desde otra vista
-        context.name_chofer = text
+        ContextChofer().get_instance().set_name_chofer(text)
+        print(ContextChofer().get_instance().get_name_chofer())
         self.root.cambiarVista("recorrido")
         

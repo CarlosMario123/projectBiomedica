@@ -9,4 +9,7 @@ class RecorridoController():
     
     def hide(self):#cierra el frame
         self.view.hide() 
-        
+    
+    def regresarInicio(self):
+        self.root.cambiarVista("choiseD")  
+             
