@@ -1,4 +1,5 @@
 from src.view.frames.ChoiseDriver import ChoiseDriverView
+from src.context.contextChofer import ContextChofer
 class ChoiseDriverController():
     def __init__(self,root):
         self.view = ChoiseDriverView(master=root,controller=self)
@@ -9,3 +10,10 @@ class ChoiseDriverController():
         
     def hide(self):#cierra el frame
         self.view.hide()
+        
+    def selectionOptions(self,text):
+        context = ContextChofer()
+        #el nombre del chofer lo guardamos en nuestro contexto guardado para que sea accessible desde otra vista
+        context.name_chofer = text
+        self.root.cambiarVista("recorrido")
+        

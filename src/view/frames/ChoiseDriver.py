@@ -21,20 +21,27 @@ class ChoiseDriverView(tk.Frame):
         self.btns1 = []
         incremento = 20
         for i in range(4):
-            self.btns1.append(tk.Button(self, text=f"Conductor {i+1}", height=4, width=15, font=("", 12, "bold"))) 
-            self.btns1[i].place(x=incremento, y=160)
+            btn = tk.Button(self, text=f"Conductor {i+1}", height=4, width=15, font=("", 12, "bold"))
+            btn.configure(command=lambda text=f"Conductor {i+1}": self.actionBtn(text))
+            btn.place(x=incremento, y=160)
             incremento += 220
+            self.btns1.append(btn)
             
     def sectionBtn2(self):
         self.btns2 = []
         incremento = 20
         for i in range(4):
-            self.btns2.append(tk.Button(self, text=f"Conductor {i+5}", height=4, width=15, font=("", 12, "bold"))) 
-            self.btns2[i].place(x=incremento, y=300)
+            btn = tk.Button(self, text=f"Conductor {i+5}", height=4, width=15, font=("", 12, "bold"))
+            btn.configure(command=lambda text=f"Conductor {i+5}": self.actionBtn(text))
+            btn.place(x=incremento, y=300)
             incremento += 220
+            self.btns2.append(btn)
     
     def show(self):
         self.pack(fill=tk.BOTH, expand=True) 
         
     def hide(self):
-        self.pack_forget()    
+        self.pack_forget()
+        
+    def actionBtn(self,text):
+        self.controller.selectionOptions(text)    
