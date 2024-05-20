@@ -22,10 +22,14 @@ class InicioView(tk.Frame):
         self.btn.config(command=self.controller.redirectDrivers)
     
     def show(self):
+        self.init_ui()
         self.pack(fill=tk.BOTH, expand=True) 
         
     def hide(self):
+        self.btn.destroy()
         self.pack_forget()
+        
+
   
 
         

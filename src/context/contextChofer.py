@@ -1,16 +1,18 @@
 class ContextChofer:
     _instance = None
+    _name_chofer = ""
 
-    def __new__(cls, *args, **kwargs):
-        if not cls._instance:
-            cls._instance = super().__new__(cls, *args, **kwargs)
-            cls._instance._name_chofer = None
-        return cls._instance
+    @staticmethod
+    def get_instance():
+        if ContextChofer._instance is None:
+            ContextChofer._instance = ContextChofer()
+        return ContextChofer._instance
 
-    @property
-    def name_chofer(self):
-        return self._name_chofer
+    @staticmethod
+    def get_name_chofer():
+        return ContextChofer._name_chofer
 
-    @name_chofer.setter
-    def name_chofer(self, value):
-        self._name_chofer = value
+    @staticmethod
+    def set_name_chofer(value):
+        ContextChofer._name_chofer = value
+
