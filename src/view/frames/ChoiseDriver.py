@@ -16,6 +16,7 @@ class ChoiseDriverView(tk.Frame):
         self.label1.place(x=350, y=1)
         self.sectionBtn1()
         self.sectionBtn2()
+        
        
         
         
