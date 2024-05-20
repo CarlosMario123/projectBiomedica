@@ -20,17 +20,19 @@ class ChoiseDriverView(tk.Frame):
     def sectionBtn1(self):
         self.btns1 = []
         incremento = 20
+        choferes = self.controller.obtener_choferes()  # Obtén los nombres de los choferes
         for i in range(4):
-            self.btns1.append(tk.Button(self, text=f"Conductor {i+1}", height=4, width=15, font=("", 12, "bold"))) 
+            self.btns1.append(tk.Button(self, text=choferes[i], height=4, width=15, font=("", 12, "bold"))) 
             self.btns1[i].place(x=incremento, y=160)
             incremento += 220
-            
+
     def sectionBtn2(self):
         self.btns2 = []
         incremento = 20
-        for i in range(4):
-            self.btns2.append(tk.Button(self, text=f"Conductor {i+5}", height=4, width=15, font=("", 12, "bold"))) 
-            self.btns2[i].place(x=incremento, y=300)
+        choferes = self.controller.obtener_choferes()  # Obtén los nombres de los choferes
+        for i in range(4, 8):
+            self.btns2.append(tk.Button(self, text=choferes[i], height=4, width=15, font=("", 12, "bold"))) 
+            self.btns2[len(self.btns2) - 1].place(x=incremento, y=300)
             incremento += 220
     
     def show(self):

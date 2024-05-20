@@ -2,7 +2,6 @@
 from src.controller.inicioController import InicioController
 from src.controller.choiseDriveController import ChoiseDriverController
 
-
 #todo relacionado con sqlite
 from bd.addChofer import llenarChoferes
 from bd.CreateTables import createTables
@@ -38,8 +37,8 @@ class Main(tk.Tk):
     
 
 #Datos iniciales de la bd
-createTables()
-llenarChoferes()
+# createTables()
+# llenarChoferes()
 
 app = Main()
 app.addFrame(controlador=InicioController,clave="inicio")
