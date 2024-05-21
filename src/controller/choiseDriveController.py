@@ -19,4 +19,3 @@ class ChoiseDriverController():
         ContextChofer().get_instance().set_name_chofer(text)
         print(ContextChofer().get_instance().get_name_chofer())
         self.root.cambiarVista("recorrido")
-        

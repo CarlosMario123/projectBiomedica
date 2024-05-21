@@ -1,50 +1,49 @@
-#definiremos una clase principal
 from src.controller.inicioController import InicioController
 from src.controller.choiseDriveController import ChoiseDriverController
 from src.controller.RecorridoController import RecorridoController
-
-#todo relacionado con sqlite
-from bd.chofer.addChofer import llenarChoferes
 from bd.CreateTables import createTables
+from src.context.contextPostura import ContextPostura
 import tkinter as tk
+
 class Main(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("Viaje seguro")
         self.geometry("900x600")
-        self.vistas = {} #las vistas se gestionan por claves y controladores
+        self.vistas = {}  # las vistas se gestionan por claves y controladores
         self.principal = None
     
-    
-    def addFrame(self,controlador,clave):
+    def addFrame(self, controlador, clave):
         self.vistas[clave] = controlador(root=self)
         
-    def asignarPrincipal(self,clave):
+    def asignarPrincipal(self, clave):
         self.principal = self.vistas[clave]
         self.principal.getView()
-        
     
     def run(self):
         self.mainloop()
         
-    def cambiarVista(self,clave):
-        
+    def cambiarVista(self, clave):
         for clave1 in self.vistas:
             if clave != clave1:
                 self.vistas[clave1].hide()
-                
         self.principal = self.vistas[clave]
         self.principal.getView()
-    
 
-#Datos iniciales de la bd
-# createTables()
-# llenarChoferes()
+# Datos iniciales de la BD
+createTables()
 
 app = Main()
-app.addFrame(controlador=InicioController,clave="inicio")
-app.addFrame(controlador=ChoiseDriverController,clave="choiseD")
-app.addFrame(controlador=RecorridoController,clave="recorrido")
+app.addFrame(controlador=InicioController, clave="inicio")
+app.addFrame(controlador=ChoiseDriverController, clave="choiseD")
+app.addFrame(controlador=RecorridoController, clave="recorrido")
 app.asignarPrincipal("inicio")
+
+# Iniciar procesamiento de datos de postura en un hilo separado
+import threading
+context_postura = ContextPostura.get_instance()
+thread = threading.Thread(target=context_postura.procesar_datos)
+thread.daemon = True
+thread.start()
 
 app.run()

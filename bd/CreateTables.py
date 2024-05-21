@@ -4,7 +4,6 @@ def createTables():
 
     conn = sqlite3.connect('bio.db')
     cursor = conn.cursor()
-
     
     cursor.execute('''
                    CREATE TABLE IF NOT EXISTS chofer (
@@ -13,7 +12,6 @@ def createTables():
                    )
                    ''')
 
-   
     cursor.execute('''
                    CREATE TABLE IF NOT EXISTS sensores (
                        id_sensores INTEGER PRIMARY KEY,
@@ -32,6 +30,25 @@ def createTables():
                        FOREIGN KEY(id_sensores) REFERENCES sensores(id_sensores)
                    )
                    ''')
+    
+    cursor.execute('''
+                    CREATE TABLE IF NOT EXISTS postura_temp (
+                    timestamp TEXT,
+                    angulo_giroscopio INTEGER,
+                    distancia_cm REAL,
+                    presencia BOOLEAN
+                )
+                ''')
+
+    cursor.execute('''CREATE TABLE IF NOT EXISTS postura_promediada (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                id_chofer INTEGER,
+                timestamp TEXT,
+                angulo_giroscopio INTEGER,
+                distancia_cm REAL,
+                presencia BOOLEAN,
+                recomendacion TEXT
+            )''')
 
     conn.commit()
     conn.close()
