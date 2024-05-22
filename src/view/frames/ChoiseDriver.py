@@ -1,6 +1,6 @@
 import tkinter as tk
 from src.view.componentes.logoChiapas import LogoChiapas
-
+from PIL import Image, ImageTk
 class ChoiseDriverView(tk.Frame):
     def __init__(self,master, controller):
         super().__init__(master)
@@ -12,6 +12,8 @@ class ChoiseDriverView(tk.Frame):
         
     def init_ui(self):
         self.logoChiapa = LogoChiapas().get_instance(master=self)
+        self.addBackgroudImage()
+        self.addLogos()
         self.label1 = tk.Label(self, text="Elige el operador", font=("", 18, "bold"))
         self.label1.place(x=350, y=1)
         self.sectionBtn1()
@@ -51,4 +53,34 @@ class ChoiseDriverView(tk.Frame):
 
     def actionBtn(self, text):
         self.controller.selectionOptions(text)
-   
+    
+    
+    def addBackgroudImage(self):
+        self.img = Image.open("img/fondo.png")
+        self.img = self.img.resize((400, 300), Image.LANCZOS)
+        self.imgtk = ImageTk.PhotoImage(self.img)
+
+        # Crear un Label con la imagen y centrarla
+        label_img = tk.Label(self, image=self.imgtk)
+        label_img.place(x=-250, y=-220, relwidth=1, relheight=1)
+        
+    def addLogos(self):
+        self.img1 = Image.open("img/rs.jpeg")
+        self.img1 = self.img1.resize((70, 70), Image.LANCZOS)
+        self.imgtk1 = ImageTk.PhotoImage(self.img1)
+
+        self.img2 = Image.open("img/ado.jpeg")
+        self.img2 = self.img2.resize((70, 70), Image.LANCZOS)
+        self.imgtk2 = ImageTk.PhotoImage(self.img2)
+
+        # Crear Labels para los logos
+        label_logo1 = tk.Label(self, image=self.imgtk1)
+        label_logo2 = tk.Label(self, image=self.imgtk2)
+
+        # Obtener el tamaño de la ventana y las imágenes
+        window_height = 600  # Altura de la ventana
+        logo_height = 80   # Altura de los logotipos
+
+        # Calcular la posición y colocar los logos en la parte inferior izquierda
+        label_logo1.place(x=10, y=window_height - logo_height - 10)  # Ajusta las coordenadas según sea necesario
+        label_logo2.place(x=120, y=window_height - logo_height - 10)  # Ajusta las coordenadas según sea necesario
