@@ -2,7 +2,6 @@ import tkinter as tk
 from PIL import Image, ImageTk
 from src.context.contextChofer import ContextChofer
 import random
-from PIL import Image, ImageTk
 
 class RecorridoFrame(tk.Frame):
     def __init__(self, master, controller):
