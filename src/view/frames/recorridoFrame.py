@@ -2,6 +2,7 @@ import tkinter as tk
 from PIL import Image, ImageTk
 from src.context.contextChofer import ContextChofer
 import random
+from PIL import Image, ImageTk
 
 class RecorridoFrame(tk.Frame):
     def __init__(self, master, controller):
@@ -12,6 +13,8 @@ class RecorridoFrame(tk.Frame):
         self.init_ui()
 
     def init_ui(self):
+        self.addBackgroudImage()
+        self.addLogos()
         self.label1 = tk.Label(self, text="", font=("", 18, "bold"), height=2)
         self.label1.pack()
 
@@ -52,9 +55,14 @@ class RecorridoFrame(tk.Frame):
             self.label2.config(text=f"Tiempo de viaje transcurrido {self.cronometro}")
             self.label2.after(2000, self.changeCronometro)
 
-    def abrir_ventana(self):
-        ruta = ["img/postura.png","img/postura2.png","img/postura3.png"]
-        # Crear y configurar la nueva ventana
+    def abrir_ventana(self,id):#funcion que notificara atravez de id
+        ruta = "img/postura.png"
+        if id == 1:
+            ruta = "img/postura2.png"
+        elif id == 2:
+            ruta = "img/postura3.png"
+        
+
         self.nueva_ventana = tk.Toplevel(self)
         self.nueva_ventana.title("Otra Ventana")
         self.nueva_ventana.geometry("800x600")
@@ -78,3 +86,33 @@ class RecorridoFrame(tk.Frame):
     
     def cerrar_ventana(self):
         self.nueva_ventana.destroy()
+        
+    def addBackgroudImage(self):
+        self.img = Image.open("img/fondo.png")
+        self.img = self.img.resize((400, 300), Image.LANCZOS)
+        self.imgtk = ImageTk.PhotoImage(self.img)
+
+        # Crear un Label con la imagen y centrarla
+        label_img = tk.Label(self, image=self.imgtk)
+        label_img.place(x=-250, y=-220, relwidth=1, relheight=1)
+        
+    def addLogos(self):
+        self.img1 = Image.open("img/rs.jpeg")
+        self.img1 = self.img1.resize((70, 70), Image.LANCZOS)
+        self.imgtk1 = ImageTk.PhotoImage(self.img1)
+
+        self.img2 = Image.open("img/ado.jpeg")
+        self.img2 = self.img2.resize((70, 70), Image.LANCZOS)
+        self.imgtk2 = ImageTk.PhotoImage(self.img2)
+
+        # Crear Labels para los logos
+        label_logo1 = tk.Label(self, image=self.imgtk1)
+        label_logo2 = tk.Label(self, image=self.imgtk2)
+
+        # Obtener el tamaño de la ventana y las imágenes
+        window_height = 600  # Altura de la ventana
+        logo_height = 80   # Altura de los logotipos
+
+        # Calcular la posición y colocar los logos en la parte inferior izquierda
+        label_logo1.place(x=10, y=window_height - logo_height - 10)  # Ajusta las coordenadas según sea necesario
+        label_logo2.place(x=120, y=window_height - logo_height - 10)  # Ajusta las coordenadas según sea necesario
