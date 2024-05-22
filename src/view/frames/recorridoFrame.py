@@ -18,7 +18,7 @@ class RecorridoFrame(tk.Frame):
         self.label2 = tk.Label(self, text=f"Tiempo de viaje transcurrido {self.cronometro}", font=("", 14, ""), height=1, width=300)
         self.label2.pack()
 
-        self.label3 = tk.Label(self, text="¿No es usted cancelar recorrido?", font=("", 16, "bold"), height=12)
+        self.label3 = tk.Label(self, text="¿No es usted o desea cancelar recorrido?", font=("", 16, "bold"), height=12)
         self.label3.pack()
         
         self.btn2 = tk.Button(self, text="Cancelar recorrido", bg="blue", fg="white", font=("Arial", 18), height=1)
@@ -53,7 +53,6 @@ class RecorridoFrame(tk.Frame):
             self.label2.after(2000, self.changeCronometro)
 
     def abrir_ventana(self):
-        
         ruta = ["img/postura.png","img/postura2.png","img/postura3.png"]
         # Crear y configurar la nueva ventana
         self.nueva_ventana = tk.Toplevel(self)
@@ -62,7 +61,7 @@ class RecorridoFrame(tk.Frame):
         
         # Cargar la imagen
         self.img = Image.open(random.choice(ruta))
-  # Reemplaza con la ruta de tu imagen
+        # Reemplaza con la ruta de tu imagen
         self.img = self.img.resize((800, 500), Image.ANTIALIAS)  # Redimensionar si es necesario
         self.imgtk = ImageTk.PhotoImage(self.img)
         

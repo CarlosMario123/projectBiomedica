@@ -1,3 +1,4 @@
+from src.context.contextChofer import ContextChofer
 import time
 from mpu6050 import mpu6050
 import RPi.GPIO as GPIO
@@ -95,9 +96,15 @@ class ContextPostura:
         limpiar_postura_temp()
 
     def procesar_datos(self):
-        id_chofer = 1
         while True:
-            for _ in range(60):
+            id_chofer = ContextChofer.get_instance().get_chofer_id()
+            if id_chofer is None:
+                print("Esperando la selección del chofer...")
+                time.sleep(5)
+                continue
+
+            # Recolección y procesamiento de datos
+            for _ in range(2):
                 angulo_giroscopio = self.leer_giroscopio()
                 distancia_cm = self.leer_distancia()
                 presencia = self.leer_presion()

@@ -15,9 +15,6 @@ class RecorridoController():
         self.view.hide() 
     
     def regresarInicio(self):
-<<<<<<< HEAD
-        self.root.cambiarVista("choiseD")
-=======
         self.root.cambiarVista("choiseD")
     
     def execute2(self):
@@ -28,6 +25,4 @@ class RecorridoController():
         if self.mostrando:
             self.view.abrir_ventana()
             print("ventana abierta")
-        self.execute2() 
-             
->>>>>>> carlos
+        self.execute2()

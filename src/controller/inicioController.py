@@ -13,6 +13,4 @@ class InicioController():
         
     def redirectDrivers(self):
         print("entro")
-        self.root.cambiarVista("choiseD")  
-
-        
+        self.root.cambiarVista("choiseD")

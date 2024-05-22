@@ -1,6 +1,7 @@
 class ContextChofer:
     _instance = None
     _name_chofer = ""
+    _chofer_id = None
 
     @staticmethod
     def get_instance():
@@ -8,11 +9,14 @@ class ContextChofer:
             ContextChofer._instance = ContextChofer()
         return ContextChofer._instance
 
-    @staticmethod
-    def get_name_chofer():
-        return ContextChofer._name_chofer
+    def get_name_chofer(self):
+        return self._name_chofer
 
-    @staticmethod
-    def set_name_chofer(value):
-        ContextChofer._name_chofer = value
+    def set_name_chofer(self, value):
+        self._name_chofer = value
 
+    def get_chofer_id(self):
+        return self._chofer_id
+
+    def set_chofer_id(self, value):
+        self._chofer_id = value
