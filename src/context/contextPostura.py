@@ -1,4 +1,4 @@
-from src.context.contextChofer import ContextChofer
+import threading
 import time
 from mpu6050 import mpu6050
 import RPi.GPIO as GPIO
@@ -6,6 +6,8 @@ from bd.datos_postura.getAvgPostura import obtener_promedio_postura
 from bd.datos_postura.addTempPostura import agregar_postura_temporal
 from bd.datos_postura.saveAvgPostura import agregar_postura_promediada
 from bd.datos_postura.cleanTemp import limpiar_postura_temp
+from bd.datos_postura.getLastPosturas import obtener_ultimas_posturas_promediadas
+from src.context.contextChofer import ContextChofer
 
 class ContextPostura:
     _instance = None
@@ -24,12 +26,16 @@ class ContextPostura:
         GPIO.setup(self.TRIG2, GPIO.OUT)
         GPIO.setup(self.ECHO2, GPIO.IN)
         GPIO.setup(self.SENSOR_PRESION, GPIO.IN)
+        self.alert_callback = None  # Callback para alertar al controlador
 
     @staticmethod
     def get_instance():
         if ContextPostura._instance is None:
             ContextPostura._instance = ContextPostura()
         return ContextPostura._instance
+
+    def set_alert_callback(self, callback):
+        self.alert_callback = callback
 
     def leer_giroscopio(self):
         accel_data = self.mpu.get_accel_data()
@@ -82,16 +88,44 @@ class ContextPostura:
     def recomendar_postura(self, angulo, distancia):
         if angulo < 90:
             if distancia > 5:
-                return "Ajustar asiento con su cuerpo"
+                return "Ajustar asiento con su cuerpo y mantener una postura menos erguida, un poco más acostado"
             else:
                 return "Se recomienda una postura menos erguida, un poco más acostado"
         elif 90 <= angulo <= 110:
             if distancia > 5:
-                return "Ajustar asiento con su cuerpo"
+                return "Ajustar asiento con su cuerpo y mantener la postura adoptada"
             else:
                 return "Se recomienda mantener la postura adoptada"
         else:
             return "Se recomienda adoptar una postura menos exigente para la espalda"
+
+    def obtener_recomendacion_id(self, recomendacion):
+        if recomendacion == "Se recomienda una postura menos erguida, un poco más acostado":
+            return 1
+        elif recomendacion == "Se recomienda mantener la postura adoptada":
+            return 2
+        elif recomendacion == "Se recomienda adoptar una postura menos exigente para la espalda":
+            return 3
+        elif recomendacion == "Ajustar asiento con su cuerpo y mantener una postura menos erguida, un poco más acostado":
+            return 4
+        elif recomendacion == "Ajustar asiento con su cuerpo y mantener la postura adoptada":
+            return 5
+
+    def obtener_promedio_ultimas_posturas(self):
+        ultimas_posturas = obtener_ultimas_posturas_promediadas(10)
+        if not ultimas_posturas:
+            return None, None, None  # Manejar el caso donde no hay suficientes datos
+        
+        sum_angulo = sum(postura['angulo'] for postura in ultimas_posturas)
+        sum_distancia = sum(postura['distancia'] for postura in ultimas_posturas)
+        sum_presencia = sum(postura['presencia'] for postura in ultimas_posturas)
+        
+        count = len(ultimas_posturas)
+        angulo_promedio = sum_angulo / count
+        distancia_promedio = sum_distancia / count
+        presencia_promedio = sum_presencia / count
+
+        return angulo_promedio, distancia_promedio, presencia_promedio
 
     def insert_postura_temp(self, timestamp, angulo_giroscopio, distancia_cm, presencia):
         agregar_postura_temporal(timestamp, angulo_giroscopio, distancia_cm, presencia)
@@ -106,6 +140,7 @@ class ContextPostura:
         limpiar_postura_temp()
 
     def procesar_datos(self):
+        inicio_horas = time.time()
         while True:
             id_chofer = ContextChofer.get_instance().get_chofer_id()
             if id_chofer is None:
@@ -114,8 +149,7 @@ class ContextPostura:
                 continue
 
             # Recolección y procesamiento de datos
-            # for _ in range(60):
-            for _ in range(2):
+            for _ in range(60):
                 angulo_giroscopio = self.leer_giroscopio()
                 distancia_cm = self.leer_distancias()
                 presencia = self.leer_presion()
@@ -139,5 +173,15 @@ class ContextPostura:
             print(f"Presencia Promediada: {'Sí' if presencia_promedio else 'No'}")
             print(f"Recomendación: {recomendacion}")
             
-            # time.sleep(1800)
-            time.sleep(30)
+            # Comprobar si han pasado 5 horas (18000 segundos)
+            # se agregaron 60 segundos para evitar algun desfase
+            if time.time() - inicio_horas >= 18060:
+                inicio_horas = time.time()  # Reiniciar el contador
+                angulo_promedio, distancia_promedio, presencia_promedio = self.obtener_promedio_ultimas_posturas()
+                if angulo_promedio is not None:
+                    recomendacion = self.recomendar_postura(angulo_promedio, distancia_promedio)
+                    recomendacion_id = self.obtener_recomendacion_id(recomendacion)
+                    if self.alert_callback:
+                        self.alert_callback(recomendacion_id)
+            
+            time.sleep(1800)

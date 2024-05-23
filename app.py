@@ -4,6 +4,7 @@ from src.controller.RecorridoController import RecorridoController
 from bd.CreateTables import createTables
 from src.context.contextPostura import ContextPostura
 import tkinter as tk
+import threading
 
 class Main(tk.Tk):
     def __init__(self):
@@ -36,12 +37,13 @@ createTables()
 app = Main()
 app.addFrame(controlador=InicioController, clave="inicio")
 app.addFrame(controlador=ChoiseDriverController, clave="choiseD")
-app.addFrame(controlador=RecorridoController, clave="recorrido")
+recorrido_controller = app.addFrame(controlador=RecorridoController, clave="recorrido")
 app.asignarPrincipal("inicio")
 
 # Iniciar procesamiento de datos de postura en un hilo separado
-import threading
 context_postura = ContextPostura.get_instance()
+context_postura.limpiar_postura_temp()  # Limpiar datos temporales al iniciar
+context_postura.set_alert_callback(recorrido_controller.recibir_alerta)
 thread = threading.Thread(target=context_postura.procesar_datos)
 thread.daemon = True
 thread.start()

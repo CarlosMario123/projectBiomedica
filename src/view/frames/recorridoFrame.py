@@ -1,7 +1,6 @@
 import tkinter as tk
 from PIL import Image, ImageTk
 from src.context.contextChofer import ContextChofer
-import random
 
 class RecorridoFrame(tk.Frame):
     def __init__(self, master, controller):
@@ -56,12 +55,17 @@ class RecorridoFrame(tk.Frame):
             self.label2.after(2000, self.changeCronometro)
 
     def abrir_ventana(self,id):
-        # Función que notificará a través de id
         ruta = "img/postura.png"
         if id == 1:
-            ruta = "img/postura2.png"
+            ruta = "img/postura.png"
         elif id == 2:
+            ruta = "img/postura2.png"
+        elif id == 3:
             ruta = "img/postura3.png"
+        elif id == 4:
+            ruta = "img/postura4.png"
+        elif id == 5:
+            ruta = "img/postura5.png"
 
         self.nueva_ventana = tk.Toplevel(self)
         self.nueva_ventana.title("Otra Ventana")
