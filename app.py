@@ -13,7 +13,7 @@ class Main(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("Viaje seguro")
-        self.geometry("900x600")
+        self.geometry("1024x768")
         self.vistas = {} #las vistas se gestionan por claves y controladores
         self.principal = None
     
