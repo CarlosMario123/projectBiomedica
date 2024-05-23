@@ -17,8 +17,8 @@ class RecorridoController():
     def regresarInicio(self):
         self.root.cambiarVista("choiseD")
 
-    def execute2(self):
-        self.view.after(5000, self.comando)
+    # def execute2(self):
+    #     self.view.after(5000, self.comando)
     
     # def comando(self):
     #     if self.mostrando:
