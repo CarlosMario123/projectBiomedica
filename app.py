@@ -5,7 +5,7 @@ from src.controller.choiseDriveController import ChoiseDriverController
 from src.controller.RecorridoController import RecorridoController
 
 #todo relacionado con sqlite
-from bd.addChofer import llenarChoferes
+from bd.chofer.addChofer import llenarChoferes
 from bd.CreateTables import createTables
 import tkinter as tk
 
@@ -42,7 +42,7 @@ class Main(tk.Tk):
 os.environ["DISPLAY"] = ":0"
 
 # Datos iniciales de la bd
-# createTables()
+createTables()
 # llenarChoferes()
 
 app = Main()
