@@ -3,7 +3,7 @@ class RecorridoController():
     def __init__(self,root):
         self.root = root
         self.view = RecorridoFrame(controller=self, master=root)
-        self.execute2()
+        # self.execute2()
         self.mostrando = False
 
     def getView(self):
