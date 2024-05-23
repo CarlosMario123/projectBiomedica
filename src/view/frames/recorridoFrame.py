@@ -63,7 +63,8 @@ class RecorridoFrame(tk.Frame):
     
         # Cargar la imagen
         self.img = Image.open(ruta)
-        self.img = self.img.resize((800, 500), Image.ANTIALIAS)
+        # self.img = self.img.resize((800, 500), Image.ANTIALIAS)
+        self.img = self.img.resize((800, 500), Image.LANCZOS)
         self.imgtk = ImageTk.PhotoImage(self.img)
         
         # Crear un Label con la imagen y centrarla
