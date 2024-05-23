@@ -15,7 +15,9 @@ class Main(tk.Tk):
         self.principal = None
     
     def addFrame(self, controlador, clave):
-        self.vistas[clave] = controlador(root=self)
+        controlador_instance = controlador(root=self)
+        self.vistas[clave] = controlador_instance
+        return controlador_instance  # Devolver la instancia del controlador
         
     def asignarPrincipal(self, clave):
         self.principal = self.vistas[clave]
