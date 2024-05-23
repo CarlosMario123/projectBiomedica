@@ -4,9 +4,9 @@ def obtener_choferes():
     conn = sqlite3.connect('bio.db')
     cursor = conn.cursor()
 
-    cursor.execute('SELECT nombre FROM chofer')
+    cursor.execute('SELECT id_chofer, nombre FROM chofer')
     choferes = cursor.fetchall()
 
     conn.close()
 
-    return [chofer[0] for chofer in choferes]
+    return choferes  # Devuelve una lista de tuplas (id_chofer, nombre)
