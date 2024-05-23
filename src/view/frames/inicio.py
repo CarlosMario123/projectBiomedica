@@ -61,18 +61,3 @@ class InicioView(tk.Frame):
         # Calcular la posición y colocar los logos en la parte inferior izquierda
         label_logo1.place(x=10, y=window_height - logo_height - 10)  # Ajusta las coordenadas según sea necesario
         label_logo2.place(x=120, y=window_height - logo_height - 10)  # Ajusta las coordenadas según sea necesario
-        
-        
-    
-        
-
-  
-
-        
-        
-        
-        
-        
-        
- 
-        
