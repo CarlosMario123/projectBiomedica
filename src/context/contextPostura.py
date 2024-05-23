@@ -104,6 +104,7 @@ class ContextPostura:
                 continue
 
             # Recolección y procesamiento de datos
+            # for _ in range(60):
             for _ in range(2):
                 angulo_giroscopio = self.leer_giroscopio()
                 distancia_cm = self.leer_distancia()
@@ -128,4 +129,5 @@ class ContextPostura:
             print(f"Presencia Promediada: {'Sí' if presencia_promedio else 'No'}")
             print(f"Recomendación: {recomendacion}")
             
-            time.sleep(1800)
+            # time.sleep(1800)
+            time.sleep(30)
