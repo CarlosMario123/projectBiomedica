@@ -116,8 +116,8 @@ class ContextPostura:
         if not ultimas_posturas:
             return None, None, None  # Manejar el caso donde no hay suficientes datos
         
-        sum_angulo = sum(postura['angulo'] for postura in ultimas_posturas)
-        sum_distancia = sum(postura['distancia'] for postura in ultimas_posturas)
+        sum_angulo = sum(postura['angulo_giroscopio'] for postura in ultimas_posturas)
+        sum_distancia = sum(postura['distancia_cm'] for postura in ultimas_posturas)
         sum_presencia = sum(postura['presencia'] for postura in ultimas_posturas)
         
         count = len(ultimas_posturas)

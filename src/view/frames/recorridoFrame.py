@@ -1,14 +1,15 @@
 import tkinter as tk
 from PIL import Image, ImageTk
 from src.context.contextChofer import ContextChofer
+from datetime import datetime
 
 class RecorridoFrame(tk.Frame):
     def __init__(self, master, controller):
         super().__init__(master)
         self.controller = controller
-        self.cronometro = 0
-        self.running = True
         self.init_ui()
+        self.start_time = None
+        self.running = False
 
     def init_ui(self):
         self.addBackgroundImage()
@@ -16,7 +17,7 @@ class RecorridoFrame(tk.Frame):
         self.label1 = tk.Label(self, text="", font=("", 18, "bold"), height=2)
         self.label1.pack()
 
-        self.label2 = tk.Label(self, text=f"Tiempo de viaje transcurrido {self.cronometro}", font=("", 14, ""), height=1)
+        self.label2 = tk.Label(self, text="Tiempo de viaje transcurrido 00:00:00", font=("", 14, ""), height=1)
         self.label2.place(x=400)
         self.label2.pack()
 
@@ -30,8 +31,6 @@ class RecorridoFrame(tk.Frame):
         # Llamar a la función para actualizar el nombre del chofer cada vez que se muestra la ventana
         self.bind("<Visibility>", self.update_name)
 
-        self.label2.after(1000, self.changeCronometro)
-
     def update_name(self, event):
         # Actualizar el nombre del chofer cada vez que se muestra la ventana
         self.label1.config(text=f"Bienvenido: {ContextChofer().get_instance().get_name_chofer()}")
@@ -41,39 +40,30 @@ class RecorridoFrame(tk.Frame):
         self.update_name(None)
         self.pack(fill=tk.BOTH, expand=True)
         self.running = True
+        self.start_time = datetime.now()
         self.changeCronometro()
 
     def hide(self):
         self.running = False
-        self.cronometro = 0
         self.pack_forget()
 
     def changeCronometro(self):
         if self.running:
-            self.cronometro += 1
-            self.label2.config(text=f"Tiempo de viaje transcurrido {self.cronometro}")
-            self.label2.after(2000, self.changeCronometro)
+            current_time = datetime.now()
+            elapsed_time = current_time - self.start_time
+            formatted_time = str(elapsed_time).split(".")[0]
+            self.label2.config(text=f"Tiempo de viaje transcurrido {formatted_time}")
+            self.after(1000, self.changeCronometro)
 
-    def abrir_ventana(self,id):
-        ruta = "img/postura.png"
-        if id == 1:
-            ruta = "img/postura.png"
-        elif id == 2:
-            ruta = "img/postura2.png"
-        elif id == 3:
-            ruta = "img/postura3.png"
-        elif id == 4:
-            ruta = "img/postura4.png"
-        elif id == 5:
-            ruta = "img/postura5.png"
-
+    def abrir_ventana(self, id):
+        ruta = f"img/postura{id}.png"
         self.nueva_ventana = tk.Toplevel(self)
-        self.nueva_ventana.title("Otra Ventana")
+        self.nueva_ventana.title("Sugerencia de Postura")
         self.nueva_ventana.geometry("800x600")
-        
+    
         # Cargar la imagen
-        self.img = Image.open(ruta)  # Reemplaza con la ruta de tu imagen
-        self.img = self.img.resize((800, 500), Image.ANTIALIAS)  # Redimensionar si es necesario
+        self.img = Image.open(ruta)
+        self.img = self.img.resize((800, 500), Image.ANTIALIAS)
         self.imgtk = ImageTk.PhotoImage(self.img)
         
         # Crear un Label con la imagen y centrarla
@@ -81,11 +71,11 @@ class RecorridoFrame(tk.Frame):
         label_img.pack(expand=True)
         
         # Etiqueta en la nueva ventana
-        label_texto = tk.Label(self.nueva_ventana, text="¡Esta es otra ventana!")
+        label_texto = tk.Label(self.nueva_ventana, text="¡Esta es una sugerencia de postura!")
         label_texto.pack(pady=10)
 
-        # Cerrar la ventana después de 2 segundos
-        self.nueva_ventana.after(2000, self.cerrar_ventana)
+        # Cerrar la ventana después de 2 minutos (120000 ms)
+        self.nueva_ventana.after(120000, self.cerrar_ventana)
     
     def cerrar_ventana(self):
         self.nueva_ventana.destroy()

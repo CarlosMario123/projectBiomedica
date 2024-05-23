@@ -6,16 +6,17 @@ def obtener_ultimas_posturas_promediadas(limit):
         cursor = conn.cursor()
 
         query = """
-        SELECT angulo, distancia, presencia
+        SELECT angulo_giroscopio, distancia_cm, presencia
         FROM postura_promediada
         ORDER BY timestamp DESC
         LIMIT ?
         """
+
         cursor.execute(query, (limit,))
         
         rows = cursor.fetchall()
 
-        posturas = [{'angulo': row[0], 'distancia': row[1], 'presencia': row[2]} for row in rows]
+        posturas = [{'angulo_giroscopio': row[0], 'distancia_cm': row[1], 'presencia': row[2]} for row in rows]
 
         conn.close()
         

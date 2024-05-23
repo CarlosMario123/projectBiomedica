@@ -20,11 +20,11 @@ class RecorridoController():
     def execute2(self):
         self.view.after(5000, self.comando)
     
-    def comando(self):
-        if self.mostrando:
-            self.view.abrir_ventana(random.randint(1, 3))  # Para testeo
-            print("ventana abierta")
-        self.execute2()
+    # def comando(self):
+    #     if self.mostrando:
+    #         self.view.abrir_ventana(random.randint(1, 3))  # Para testeo
+    #         print("ventana abierta")
+    #     self.execute2()
 
     def recibir_alerta(self, id_recomendacion):
         if self.mostrando:
