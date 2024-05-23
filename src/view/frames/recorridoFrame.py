@@ -68,12 +68,7 @@ class RecorridoFrame(tk.Frame):
         self.nueva_ventana.geometry("800x600")
         
         # Cargar la imagen
-<<<<<<< HEAD
-        self.img = Image.open(random.choice(ruta))
-        # Reemplaza con la ruta de tu imagen
-=======
         self.img = Image.open(ruta)  # Reemplaza con la ruta de tu imagen
->>>>>>> carlos
         self.img = self.img.resize((800, 500), Image.ANTIALIAS)  # Redimensionar si es necesario
         self.imgtk = ImageTk.PhotoImage(self.img)
         
