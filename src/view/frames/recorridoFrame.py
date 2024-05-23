@@ -12,17 +12,18 @@ class RecorridoFrame(tk.Frame):
         self.init_ui()
 
     def init_ui(self):
-        self.addBackgroudImage()
+        self.addBackgroundImage()
         self.addLogos()
         self.label1 = tk.Label(self, text="", font=("", 18, "bold"), height=2)
         self.label1.pack()
 
-        self.label2 = tk.Label(self, text=f"Tiempo de viaje transcurrido {self.cronometro}", font=("", 14, ""), height=1, width=300)
+        self.label2 = tk.Label(self, text=f"Tiempo de viaje transcurrido {self.cronometro}", font=("", 14, ""), height=1)
+        self.label2.place(x=400)
         self.label2.pack()
 
         self.label3 = tk.Label(self, text="¿No es usted o desea cancelar recorrido?", font=("", 16, "bold"), height=12)
         self.label3.pack()
-        
+
         self.btn2 = tk.Button(self, text="Cancelar recorrido", bg="blue", fg="white", font=("Arial", 18), height=1)
         self.btn2.config(command=self.controller.regresarInicio)
         self.btn2.pack()
@@ -54,21 +55,25 @@ class RecorridoFrame(tk.Frame):
             self.label2.config(text=f"Tiempo de viaje transcurrido {self.cronometro}")
             self.label2.after(2000, self.changeCronometro)
 
-    def abrir_ventana(self,id):#funcion que notificara atravez de id
+    def abrir_ventana(self,id):
+        # Función que notificará a través de id
         ruta = "img/postura.png"
         if id == 1:
             ruta = "img/postura2.png"
         elif id == 2:
             ruta = "img/postura3.png"
-        
 
         self.nueva_ventana = tk.Toplevel(self)
         self.nueva_ventana.title("Otra Ventana")
         self.nueva_ventana.geometry("800x600")
         
         # Cargar la imagen
+<<<<<<< HEAD
         self.img = Image.open(random.choice(ruta))
         # Reemplaza con la ruta de tu imagen
+=======
+        self.img = Image.open(ruta)  # Reemplaza con la ruta de tu imagen
+>>>>>>> carlos
         self.img = self.img.resize((800, 500), Image.ANTIALIAS)  # Redimensionar si es necesario
         self.imgtk = ImageTk.PhotoImage(self.img)
         
@@ -86,14 +91,15 @@ class RecorridoFrame(tk.Frame):
     def cerrar_ventana(self):
         self.nueva_ventana.destroy()
         
-    def addBackgroudImage(self):
+    def addBackgroundImage(self):
         self.img = Image.open("img/fondo.png")
         self.img = self.img.resize((400, 300), Image.LANCZOS)
         self.imgtk = ImageTk.PhotoImage(self.img)
 
         # Crear un Label con la imagen y centrarla
-        label_img = tk.Label(self, image=self.imgtk)
-        label_img.place(x=-250, y=-220, relwidth=1, relheight=1)
+        self.label_img = tk.Label(self, image=self.imgtk)
+        self.label_img.place(x=-250, y=-220, relwidth=1, relheight=1)
+        self.label_img.tkraise()  # Enviar el label de la imagen de fondo al fondo
         
     def addLogos(self):
         self.img1 = Image.open("img/rs.jpeg")
@@ -115,3 +121,9 @@ class RecorridoFrame(tk.Frame):
         # Calcular la posición y colocar los logos en la parte inferior izquierda
         label_logo1.place(x=10, y=window_height - logo_height - 10)  # Ajusta las coordenadas según sea necesario
         label_logo2.place(x=120, y=window_height - logo_height - 10)  # Ajusta las coordenadas según sea necesario
+        
+        # Asegurar que los logos estén al frente
+        label_logo1.tkraise()
+        label_logo2.tkraise()
+
+# Asume que el resto del código, como la inicialización de la ventana principal y la creación de una instancia de RecorridoFrame, está correctamente implementado.
