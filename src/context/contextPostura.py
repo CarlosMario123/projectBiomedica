@@ -114,8 +114,8 @@ class ContextPostura:
                 continue
 
             # Recolección y procesamiento de datos
-            # for _ in range(2):
-            for _ in range(60):
+            # for _ in range(60):
+            for _ in range(2):
                 angulo_giroscopio = self.leer_giroscopio()
                 distancia_cm = self.leer_distancias()
                 presencia = self.leer_presion()
