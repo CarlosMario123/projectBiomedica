@@ -114,7 +114,6 @@ class ContextPostura:
                 continue
 
             # Recolección y procesamiento de datos
-            # for _ in range(60):
             for _ in range(2):
                 angulo_giroscopio = self.leer_giroscopio()
                 distancia_cm = self.leer_distancias()
@@ -139,5 +138,8 @@ class ContextPostura:
             print(f"Presencia Promediada: {'Sí' if presencia_promedio else 'No'}")
             print(f"Recomendación: {recomendacion}")
             
-            # time.sleep(1800)
-            time.sleep(30)
+            time.sleep(1800)
+
+# Suponiendo que ya tienes un sensor conectado a los pines TRIG=23 y ECHO=24, 
+# puedes conectar el segundo sensor a los pines TRIG y ECHO diferentes. 
+# Por ejemplo, podrías usar TRIG=27 y ECHO=22 para el segundo sensor.

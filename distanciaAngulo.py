@@ -8,8 +8,10 @@ mpu = mpu6050(0x68)
 # Configuración inicial del sensor de distancia
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
-TRIG = 23
-ECHO = 24
+# TRIG = 23
+# ECHO = 24
+TRIG = 27
+ECHO = 22
 GPIO.setup(TRIG, GPIO.OUT)
 GPIO.setup(ECHO, GPIO.IN)
 
