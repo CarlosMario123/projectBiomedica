@@ -25,25 +25,29 @@ class ChoiseDriverView(tk.Frame):
     def sectionBtn1(self):
         self.btns1 = []
         incremento = 20
-        choferes = self.controller.obtener_choferes()  # Obtén los nombres de los choferes
+        choferes = self.controller.obtener_choferes()  # Obtén los choferes (id, nombre)
         for i in range(4):
-            btn = tk.Button(self, text=choferes[i], height=4, width=15, font=("", 12, "bold"))
-            btn.place(x=incremento, y=160)
-            btn.configure(command=lambda text=choferes[i]: self.actionBtn(text))
-            self.btns1.append(btn)
-            incremento += 220
-
+            if i < len(choferes):  # Asegurarse de no superar el índice
+                id_chofer, nombre = choferes[i]
+                btn = tk.Button(self, text=nombre, height=4, width=15, font=("", 12, "bold"))
+                btn.place(x=incremento, y=160)
+                btn.configure(command=lambda text=nombre: self.actionBtn(text))
+                self.btns1.append(btn)
+                incremento += 220
 
     def sectionBtn2(self):
         self.btns2 = []
         incremento = 20
-        choferes = self.controller.obtener_choferes()  # Obtén los nombres de los choferes
+        choferes = self.controller.obtener_choferes()  # Obtén los choferes (id, nombre)
         for i in range(4, 8):
-            btn = tk.Button(self, text=choferes[i], height=4, width=15, font=("", 12, "bold"))
-            btn.place(x=incremento, y=300)
-            btn.configure(command=lambda text=choferes[i]: self.actionBtn(text))  # Corregido el comando
-            self.btns2.append(btn)
-            incremento += 220
+            if i < len(choferes):  # Asegurarse de no superar el índice
+                id_chofer, nombre = choferes[i]
+                btn = tk.Button(self, text=nombre, height=4, width=15, font=("", 12, "bold"))
+                btn.place(x=incremento, y=300)
+                btn.configure(command=lambda text=nombre: self.actionBtn(text))  # Corregido el comando
+                self.btns2.append(btn)
+                incremento += 220
+
     
     def show(self):
         self.pack(fill=tk.BOTH, expand=True) 

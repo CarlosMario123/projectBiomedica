@@ -19,7 +19,7 @@ class ChoiseDriverController:
     def selectionOptions(self, chofer_name):
         # Obtener el ID del chofer seleccionado
         choferes = self.obtener_choferes()
-        chofer_id = next((id for id, name in choferes if name == chofer_name), None)
+        chofer_id = next((id_chofer for id_chofer, name in choferes if name == chofer_name), None)
 
         # Almacenar el ID del chofer en ContextChofer
         ContextChofer.get_instance().set_chofer_id(chofer_id)
