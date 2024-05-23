@@ -10,15 +10,19 @@ from bd.datos_postura.cleanTemp import limpiar_postura_temp
 class ContextPostura:
     _instance = None
     mpu = mpu6050(0x68)
-    TRIG = 23
-    ECHO = 24
+    TRIG1 = 23
+    ECHO1 = 24
+    TRIG2 = 27
+    ECHO2 = 22
     SENSOR_PRESION = 25
 
     def __init__(self):
         GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(False)
-        GPIO.setup(self.TRIG, GPIO.OUT)
-        GPIO.setup(self.ECHO, GPIO.IN)
+        GPIO.setup(self.TRIG1, GPIO.OUT)
+        GPIO.setup(self.ECHO1, GPIO.IN)
+        GPIO.setup(self.TRIG2, GPIO.OUT)
+        GPIO.setup(self.ECHO2, GPIO.IN)
         GPIO.setup(self.SENSOR_PRESION, GPIO.IN)
 
     @staticmethod
@@ -47,24 +51,30 @@ class ContextPostura:
         else:
             return x_value * 10
 
-    def leer_distancia(self):
-        GPIO.output(self.TRIG, False)
+    def leer_distancia(self, trig, echo):
+        GPIO.output(trig, False)
         time.sleep(2)
 
-        GPIO.output(self.TRIG, True)
+        GPIO.output(trig, True)
         time.sleep(0.00001)
-        GPIO.output(self.TRIG, False)
+        GPIO.output(trig, False)
 
-        while GPIO.input(self.ECHO) == 0:
+        while GPIO.input(echo) == 0:
             pulse_start = time.time()
 
-        while GPIO.input(self.ECHO) == 1:
+        while GPIO.input(echo) == 1:
             pulse_end = time.time()
 
         pulse_duration = pulse_end - pulse_start
         distance = pulse_duration * 17150
         distance = round(distance, 2)
         return distance
+
+    def leer_distancias(self):
+        distancia1 = self.leer_distancia(self.TRIG1, self.ECHO1)
+        distancia2 = self.leer_distancia(self.TRIG2, self.ECHO2)
+        distancia_promedio = (distancia1 + distancia2) / 2
+        return distancia_promedio
 
     def leer_presion(self):
         return GPIO.input(self.SENSOR_PRESION)
@@ -104,10 +114,10 @@ class ContextPostura:
                 continue
 
             # Recolección y procesamiento de datos
-            # for _ in range(60):
-            for _ in range(2):
+            # for _ in range(2):
+            for _ in range(60):
                 angulo_giroscopio = self.leer_giroscopio()
-                distancia_cm = self.leer_distancia()
+                distancia_cm = self.leer_distancias()
                 presencia = self.leer_presion()
                 
                 timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
