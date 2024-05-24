@@ -20,7 +20,7 @@ class InicioView(tk.Frame):
      
 
     def btnAnimate(self):
-        self.btn = tk.Button(self, text="Iniciar recorrido", font=("", 18, "bold"), bg="#3DDE19", fg="white")
+        self.btn = tk.Button(self, text="Iniciar recorrido", font=("", 18, "bold"), bg="#3DDE19", fg="white", height=4)
         self.btn.place(x=350, y=500, width=200, height=50)
         self.btn.config(command=self.controller.redirectDrivers)
 

@@ -24,7 +24,7 @@ class RecorridoFrame(tk.Frame):
         self.label3 = tk.Label(self, text="¿No es usted o desea cancelar recorrido?", font=("", 16, "bold"), height=12)
         self.label3.pack()
 
-        self.btn2 = tk.Button(self, text="Cancelar recorrido", bg="blue", fg="white", font=("Arial", 18), height=1)
+        self.btn2 = tk.Button(self, text="Cancelar recorrido", bg="blue", fg="white", font=("Arial", 18), height=4)
         self.btn2.config(command=self.controller.regresarInicio)
         self.btn2.pack()
 
