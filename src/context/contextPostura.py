@@ -211,6 +211,6 @@ class ContextPostura:
                         self.alert_callback(recomendacion_id)
             
             # time.sleep(1800)
-            time.sleep(90)
+            time.sleep(60)
 # en testing los tiempo son de: guardar promedio cada 60 segundos
 # y alertar cada 90 segundos
