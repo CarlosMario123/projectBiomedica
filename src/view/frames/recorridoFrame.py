@@ -3,9 +3,53 @@ from PIL import Image, ImageTk
 from src.context.contextChofer import ContextChofer
 from datetime import datetime
 
+class LogoChiapas(tk.Label):
+    _instance = None
+    image = None
+
+    def __new__(cls, master=None, **kwargs):
+        if not cls._instance:
+            cls._instance = super().__new__(cls)
+            cls._instance.init_singleton(master, **kwargs)
+        return cls._instance
+
+    def init_singleton(self, master=None, **kwargs):
+        tk.Label.__init__(self, master, **kwargs)
+        self.master.bind("<Configure>", self.on_resize)
+        self.doConfig()
+
+    def doConfig(self):
+        file = "img/chiapas.png"
+        
+        if not LogoChiapas.image:
+            LogoChiapas.image = tk.PhotoImage(file=file)
+        
+        self.config(image=LogoChiapas.image, bg="#F6F5FB")
+        self.update_position()
+
+    def update_position(self):
+        if self.master:
+            window_width = 1200
+            window_height = 630
+            image_width = LogoChiapas.image.width()
+            image_height = LogoChiapas.image.height()
+            x = window_width - image_width - 10  # margen de 10 píxeles desde el borde derecho
+            y = window_height - image_height - 10  # margen de 10 píxeles desde el borde inferior
+            self.place(x=x, y=y)
+
+    def on_resize(self, event):
+        self.update_position()
+
+    @staticmethod
+    def get_instance(master=None):
+        if not LogoChiapas._instance:
+            LogoChiapas._instance = LogoChiapas(master)
+        return LogoChiapas._instance
+
+
 class RecorridoFrame(tk.Frame):
     def __init__(self, master, controller):
-        super().__init__(master)
+        super().__init__(master, bg="#F6F5FB")
         self.controller = controller
         self.init_ui()
         self.start_time = None
@@ -14,17 +58,28 @@ class RecorridoFrame(tk.Frame):
     def init_ui(self):
         self.addBackgroundImage()
         self.addLogos()
+        
+        # Integrar LogoChiapas directamente en el frame
+        self.logoChiapa = LogoChiapas().get_instance(master=self)
+        self.logoChiapa.lower()
+
         self.label1 = tk.Label(self, text="", font=("", 18, "bold"), height=2)
         self.label1.pack()
 
-        self.label2 = tk.Label(self, text="Tiempo de viaje transcurrido 00:00:00", font=("", 14, ""), height=1)
-        self.label2.place(x=400)
+        self.label2 = tk.Label(self, text="Tiempo de viaje transcurrido 00:00:00", font=("", 14, ""), height=1, bg="#F6F5FB", fg="black")
+        self.label2.place(x=480, y=70)
         self.label2.pack()
 
-        self.label3 = tk.Label(self, text="¿No es usted o desea cancelar recorrido?", font=("", 16, "bold"), height=12)
+        self.label3 = tk.Label(self, text="¿No es usted o desea cancelar recorrido?", font=("", 16, "bold"), height=12, bg="#F6F5FB", fg="black")
+        self.label3.place(x=480, y=200)
         self.label3.pack()
 
-        self.btn2 = tk.Button(self, text="Cancelar recorrido", bg="blue", fg="white", font=("Arial", 18), height=4)
+        self.label4 = tk.Label(self, text="Maneje con precaución y sin distracciones", font=("Montserrat", 12, "bold"), bg="#F6F5FB", fg="black")
+        self.label4.place(x=510, y=100)
+        self.label5 = tk.Label(self, text="¡FELIZ VIAJE!", font=("Montserrat", 14, "bold"), bg="#F6F5FB", fg="black")
+        self.label5.place(x=625, y=130)
+
+        self.btn2 = tk.Button(self, text="Cancelar recorrido", bg="blue", fg="white", font=("Arial", 18), height=1)
         self.btn2.config(command=self.controller.regresarInicio)
         self.btn2.pack()
 
@@ -33,7 +88,7 @@ class RecorridoFrame(tk.Frame):
 
     def update_name(self, event):
         # Actualizar el nombre del chofer cada vez que se muestra la ventana
-        self.label1.config(text=f"Bienvenido: {ContextChofer().get_instance().get_name_chofer()}")
+        self.label1.config(text=f"Bienvenido: {ContextChofer().get_instance().get_name_chofer()}", bg="#F6F5FB", fg="black")
 
     def show(self):
         # Actualizar el nombre del chofer al mostrar la ventana
@@ -83,13 +138,12 @@ class RecorridoFrame(tk.Frame):
         
     def addBackgroundImage(self):
         self.img = Image.open("img/fondo.png")
-        self.img = self.img.resize((400, 300), Image.LANCZOS)
+        self.img = self.img.resize((490, 380), Image.LANCZOS)
         self.imgtk = ImageTk.PhotoImage(self.img)
 
         # Crear un Label con la imagen y centrarla
-        self.label_img = tk.Label(self, image=self.imgtk)
-        self.label_img.place(x=-250, y=-220, relwidth=1, relheight=1)
-        self.label_img.tkraise()  # Enviar el label de la imagen de fondo al fondo
+        label_img = tk.Label(self, image=self.imgtk, bg="#F6F5FB")
+        label_img.place(x=-1, y=-1)
         
     def addLogos(self):
         self.img1 = Image.open("img/rs.jpeg")
@@ -115,5 +169,3 @@ class RecorridoFrame(tk.Frame):
         # Asegurar que los logos estén al frente
         label_logo1.tkraise()
         label_logo2.tkraise()
-
-# Asume que el resto del código, como la inicialización de la ventana principal y la creación de una instancia de RecorridoFrame, está correctamente implementado.

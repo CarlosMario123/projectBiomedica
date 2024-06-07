@@ -1,9 +1,7 @@
 import tkinter as tk
 
 class LogoChiapas(tk.Label):
-    # Atributo de clase para mantener la instancia única
     _instance = None
-    # Atributo de clase para mantener la referencia a la imagen
     image = None
 
     def __new__(cls, master=None, **kwargs):
@@ -14,21 +12,31 @@ class LogoChiapas(tk.Label):
 
     def init_singleton(self, master=None, **kwargs):
         tk.Label.__init__(self, master, **kwargs)
-        self.place(x=670, y=400)
+        self.master.bind("<Configure>", self.on_resize)
         self.doConfig()
 
     def doConfig(self):
         file = "img/chiapas.png"
         
-        # Asignar la imagen al atributo de clase
         if not LogoChiapas.image:
             LogoChiapas.image = tk.PhotoImage(file=file)
         
-        self.config(image=LogoChiapas.image)
-    
-    def editPosition(self, x1, y1):
-        self.place(x=x1, y=y1)
-    
+        self.config(image=LogoChiapas.image, bg="#F6F5FB")
+        self.update_position()
+
+    def update_position(self):
+        if self.master:
+            window_width = 1200
+            window_height = 630
+            image_width = LogoChiapas.image.width()
+            image_height = LogoChiapas.image.height()
+            x = window_width - image_width - 10  # margen de 10 píxeles desde el borde derecho
+            y = window_height - image_height - 10  # margen de 10 píxeles desde el borde inferior
+            self.place(x=x, y=y)
+
+    def on_resize(self, event):
+        self.update_position()
+
     @staticmethod
     def get_instance(master=None):
         if not LogoChiapas._instance:
