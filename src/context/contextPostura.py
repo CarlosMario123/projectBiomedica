@@ -8,7 +8,7 @@ from bd.datos_postura.saveAvgPostura import agregar_postura_promediada
 from bd.datos_postura.cleanTemp import limpiar_postura_temp
 from bd.datos_postura.getLastPosturas import obtener_ultimas_posturas_promediadas
 from src.context.contextChofer import ContextChofer
-
+from src.utils.serialReader import SerialReader
 class ContextPostura:
     _instance = None
     mpu = mpu6050(0x68)
@@ -17,7 +17,9 @@ class ContextPostura:
     TRIG2 = 27
     ECHO2 = 22
     SENSOR_PRESION = 25
-
+    presenciaSen = SerialReader('/dev/ttyUSB0')
+    presenciaValue = 0
+   
     def __init__(self):
         GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(False)
@@ -27,12 +29,18 @@ class ContextPostura:
         GPIO.setup(self.ECHO2, GPIO.IN)
         GPIO.setup(self.SENSOR_PRESION, GPIO.IN)
         self.alert_callback = None  # Callback para alertar al controlador
-
+        self.presenciaSen.start_reading(self.callBackPresencia)
     @staticmethod
     def get_instance():
         if ContextPostura._instance is None:
             ContextPostura._instance = ContextPostura()
         return ContextPostura._instance
+    def callBackPresencia(self,data):
+        if(data =='Golpe detectado!'):
+            print('hubo presencia')
+            self.presenciaValue = False
+        else:
+            self.presenciaValue = True
 
     def set_alert_callback(self, callback):
         self.alert_callback = callback
@@ -83,7 +91,7 @@ class ContextPostura:
         return distancia_promedio
 
     def leer_presion(self):
-        return GPIO.input(self.SENSOR_PRESION)
+        return self.presenciaValue
 
     def recomendar_postura(self, angulo, distancia):
         if angulo < 90:
@@ -185,3 +193,7 @@ class ContextPostura:
                         self.alert_callback(recomendacion_id)
             
             time.sleep(1800)
+
+   
+   
+    
