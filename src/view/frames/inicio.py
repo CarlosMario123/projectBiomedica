@@ -13,7 +13,7 @@ class InicioView(tk.Frame):
         self.addBackgroudImage()
         self.addLogos()
         self.label1 = tk.Label(self, text="Monitoreo de Postura para Conducción de Vehículos de Transporte Público de Ruta Prolongada", font=("", 11, "bold"), bg="#F6F5FB", fg="black")
-        self.label1.place(x=425, y=10)
+        self.label1.place(x=410, y=10)
      
 
     def btnAnimate(self):
@@ -60,7 +60,7 @@ class InicioView(tk.Frame):
         label_logo2 = tk.Label(self, image=self.logotk2)
 
         # Obtener el tamaño de la ventana y las imágenes
-        window_height = 640  # Altura de la ventana
+        window_height = 625  # Altura de la ventana
         logo_height = 80   # Altura de los logotipos
 
         # Calcular la posición y colocar los logos en la parte inferior izquierda
