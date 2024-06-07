@@ -163,7 +163,6 @@ class ContextPostura:
 
             if self.update_callback:
                 self.update_callback(angulo_giroscopio, distancia1, distancia2, presencia)
-
             time.sleep(3)
 
     def procesar_datos(self):
@@ -175,7 +174,6 @@ class ContextPostura:
                 time.sleep(5)
                 continue
 
-            # Recolección y procesamiento de datos
             # for _ in range(60):
             for _ in range(2):
                 angulo_giroscopio = self.leer_giroscopio()
@@ -184,7 +182,7 @@ class ContextPostura:
                 
                 timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
                 self.insert_postura_temp(timestamp, angulo_giroscopio, distancia_cm, presencia)
-
+                
                 time.sleep(30)
             
             angulo_promedio, distancia_promedio, presencia_promedio = self.promediar_datos()
@@ -203,7 +201,6 @@ class ContextPostura:
             
             # Comprobar si han pasado 5 horas (18000 segundos)
             # se agregaron 60 segundos para evitar algun desfase
-            # if time.time() - inicio_horas >= 18060:
             if time.time() - inicio_horas >= 90:
                 inicio_horas = time.time()  # Reiniciar el contador
                 angulo_promedio, distancia_promedio, presencia_promedio = self.obtener_promedio_ultimas_posturas()
@@ -214,6 +211,5 @@ class ContextPostura:
                         self.alert_callback(recomendacion_id)
             
             # time.sleep(1800)
-            # time.sleep(60)
 # en testing los tiempo son de: guardar promedio cada 60 segundos
 # y alertar cada 90 segundos
