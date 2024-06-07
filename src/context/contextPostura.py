@@ -193,7 +193,3 @@ class ContextPostura:
                         self.alert_callback(recomendacion_id)
             
             time.sleep(1800)
-
-   
-   
-    
