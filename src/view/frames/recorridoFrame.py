@@ -1,5 +1,6 @@
 import tkinter as tk
 from PIL import Image, ImageTk
+from src.view.componentes.logoChiapas import LogoChiapas
 from src.context.contextChofer import ContextChofer
 from datetime import datetime
 
@@ -12,6 +13,7 @@ class RecorridoFrame(tk.Frame):
         self.running = False
 
     def init_ui(self):
+        self.logoChiapa = LogoChiapas().get_instance(master=self)
         self.addBackgroundImage()
         self.addLogos()
         self.label1 = tk.Label(self, text="", font=("", 18, "bold"), height=2)

@@ -9,7 +9,6 @@ class InicioView(tk.Frame):
         self.after(1000, self.btnAnimate)  # evento para prolongar eventos a un tiempo especifico
 
     def init_ui(self):
-      
         self.addBackgroudImage()
         self.addLogos()
         self.label1 = tk.Label(self, text="Monitoreo de Postura para Conducción de Vehículos de Transporte Público de Ruta Prolongada", font=("", 10, "bold"), bg="#F6F5FB", fg="black")
