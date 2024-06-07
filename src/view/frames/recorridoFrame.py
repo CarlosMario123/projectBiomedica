@@ -86,6 +86,16 @@ class RecorridoFrame(tk.Frame):
         # Llamar a la función para actualizar el nombre del chofer cada vez que se muestra la ventana
         self.bind("<Visibility>", self.update_name)
 
+        self.sensor_labels = {
+            "angulo": tk.Label(self, text="Ángulo: 0°", font=("Arial", 12), bg="#F6F5FB", fg="black"),
+            "distancia1": tk.Label(self, text="Distancia 1: 0 cm", font=("Arial", 12), bg="#F6F5FB", fg="black"),
+            "distancia2": tk.Label(self, text="Distancia 2: 0 cm", font=("Arial", 12), bg="#F6F5FB", fg="black"),
+            "presencia": tk.Label(self, text="Presencia: No", font=("Arial", 12), bg="#F6F5FB", fg="black")
+        }
+
+        for label in self.sensor_labels.values():
+            label.pack()
+
     def update_name(self, event):
         # Actualizar el nombre del chofer cada vez que se muestra la ventana
         self.label1.config(text=f"Bienvenido: {ContextChofer().get_instance().get_name_chofer()}", bg="#F6F5FB", fg="black")
@@ -135,6 +145,12 @@ class RecorridoFrame(tk.Frame):
     
     def cerrar_ventana(self):
         self.nueva_ventana.destroy()
+
+    def actualizar_datos_sensores(self, angulo, distancia1, distancia2, presencia):
+        self.sensor_labels["angulo"].config(text=f"Ángulo: {angulo}°")
+        self.sensor_labels["distancia1"].config(text=f"Distancia 1: {distancia1} cm")
+        self.sensor_labels["distancia2"].config(text=f"Distancia 2: {distancia2} cm")
+        self.sensor_labels["presencia"].config(text=f"Presencia: {'Sí' if presencia else 'No'}")
         
     def addBackgroundImage(self):
         self.img = Image.open("img/fondo.png")

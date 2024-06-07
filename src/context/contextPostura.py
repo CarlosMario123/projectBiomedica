@@ -29,6 +29,7 @@ class ContextPostura:
         GPIO.setup(self.ECHO2, GPIO.IN)
         GPIO.setup(self.SENSOR_PRESION, GPIO.IN)
         self.alert_callback = None  # Callback para alertar al controlador
+        self.update_callback = None
         self.presenciaSen.start_reading(self.callBackPresencia)
     @staticmethod
     def get_instance():
@@ -44,6 +45,9 @@ class ContextPostura:
 
     def set_alert_callback(self, callback):
         self.alert_callback = callback
+
+    def set_update_callback(self, callback):
+        self.update_callback = callback
 
     def leer_giroscopio(self):
         accel_data = self.mpu.get_accel_data()
@@ -120,7 +124,9 @@ class ContextPostura:
             return 5
 
     def obtener_promedio_ultimas_posturas(self):
-        ultimas_posturas = obtener_ultimas_posturas_promediadas(10)
+        # ultimas_posturas = obtener_ultimas_posturas_promediadas(10)
+        ultimas_posturas = obtener_ultimas_posturas_promediadas(2)
+        # en testing se obtienen las ultimas 2 posturas
         if not ultimas_posturas:
             return None, None, None  # Manejar el caso donde no hay suficientes datos
         
@@ -162,9 +168,15 @@ class ContextPostura:
                 angulo_giroscopio = self.leer_giroscopio()
                 distancia_cm = self.leer_distancias()
                 presencia = self.leer_presion()
+
+                distancia1 = self.leer_distancia(self.TRIG1, self.ECHO1)
+                distancia2 = self.leer_distancia(self.TRIG2, self.ECHO2)
                 
                 timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
                 self.insert_postura_temp(timestamp, angulo_giroscopio, distancia_cm, presencia)
+
+                if self.update_callback:
+                    self.update_callback(angulo_giroscopio, distancia1, distancia2, presencia)
                 
                 time.sleep(30)
             
@@ -185,7 +197,7 @@ class ContextPostura:
             # Comprobar si han pasado 5 horas (18000 segundos)
             # se agregaron 60 segundos para evitar algun desfase
             # if time.time() - inicio_horas >= 18060:
-            if time.time() - inicio_horas >= 200:
+            if time.time() - inicio_horas >= 90:
                 inicio_horas = time.time()  # Reiniciar el contador
                 angulo_promedio, distancia_promedio, presencia_promedio = self.obtener_promedio_ultimas_posturas()
                 if angulo_promedio is not None:
@@ -195,4 +207,6 @@ class ContextPostura:
                         self.alert_callback(recomendacion_id)
             
             # time.sleep(1800)
-            time.sleep(90)
+            time.sleep(60)
+# en testing los tiempo son de: guardar promedio cada 60 segundos
+# y alertar cada 90 segundos
