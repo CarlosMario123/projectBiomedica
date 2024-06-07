@@ -204,6 +204,7 @@ class ContextPostura:
             # Comprobar si han pasado 5 horas (18000 segundos)
             # se agregaron 60 segundos para evitar algun desfase
             # if time.time() - inicio_horas >= 18060:
+            print(f"time {time.time() - inicio_horas}")
             if time.time() - inicio_horas >= 60:
                 inicio_horas = time.time()  # Reiniciar el contador
                 angulo_promedio, distancia_promedio, presencia_promedio = self.obtener_promedio_ultimas_posturas()
