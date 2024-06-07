@@ -155,13 +155,16 @@ class ContextPostura:
         limpiar_postura_temp()
 
     def mostrar_datos(self):
-        angulo_giroscopio = self.leer_giroscopio()
-        presencia = self.leer_presion()
-        distancia1 = self.leer_distancia(self.TRIG1, self.ECHO1)
-        distancia2 = self.leer_distancia(self.TRIG2, self.ECHO2)
+        while True:
+            angulo_giroscopio = self.leer_giroscopio()
+            presencia = self.leer_presion()
+            distancia1 = self.leer_distancia(self.TRIG1, self.ECHO1)
+            distancia2 = self.leer_distancia(self.TRIG2, self.ECHO2)
 
-        if self.update_callback:
-            self.update_callback(angulo_giroscopio, distancia1, distancia2, presencia)
+            if self.update_callback:
+                self.update_callback(angulo_giroscopio, distancia1, distancia2, presencia)
+
+            time.sleep(3)
 
     def procesar_datos(self):
         inicio_horas = time.time()
