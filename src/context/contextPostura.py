@@ -177,7 +177,7 @@ class ContextPostura:
 
             # Recolección y procesamiento de datos
             # for _ in range(60):
-            for _ in range(2):
+            for _ in range(1):
                 angulo_giroscopio = self.leer_giroscopio()
                 distancia_cm = self.leer_distancias()
                 presencia = self.leer_presion()
@@ -204,7 +204,7 @@ class ContextPostura:
             # Comprobar si han pasado 5 horas (18000 segundos)
             # se agregaron 60 segundos para evitar algun desfase
             # if time.time() - inicio_horas >= 18060:
-            if time.time() - inicio_horas >= 90:
+            if time.time() - inicio_horas >= 60:
                 inicio_horas = time.time()  # Reiniciar el contador
                 angulo_promedio, distancia_promedio, presencia_promedio = self.obtener_promedio_ultimas_posturas()
                 if angulo_promedio is not None:
