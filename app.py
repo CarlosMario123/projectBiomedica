@@ -10,11 +10,7 @@ class Main(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("Viaje seguro")
-<<<<<<< HEAD
-        self.geometry("1024x768")
-=======
         self.geometry("1200x625")
->>>>>>> main
         self.vistas = {}  # las vistas se gestionan por claves y controladores
         self.principal = None
     
@@ -50,6 +46,7 @@ app.asignarPrincipal("inicio")
 context_postura = ContextPostura.get_instance()
 context_postura.limpiar_postura_temp()  # Limpiar datos temporales al iniciar
 context_postura.set_alert_callback(recorrido_controller.recibir_alerta)
+context_postura.set_update_callback(recorrido_controller.actualizar_datos_sensores)  # Configurar el callback de actualización de datos
 thread = threading.Thread(target=context_postura.procesar_datos)
 thread.daemon = True
 thread.start()
