@@ -154,6 +154,15 @@ class ContextPostura:
     def limpiar_postura_temp(self):
         limpiar_postura_temp()
 
+    def mostrar_datos(self):
+        while True:
+            angulo_giroscopio = self.leer_giroscopio()
+            distancia_cm = self.leer_distancias()
+            presencia = self.leer_presion()
+            if self.update_callback:
+                self.update_callback(angulo_giroscopio, distancia_cm, presencia)
+            time.sleep(5)
+
     def procesar_datos(self):
         inicio_horas = time.time()
         while True:
@@ -172,18 +181,7 @@ class ContextPostura:
                 
                 timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
                 self.insert_postura_temp(timestamp, angulo_giroscopio, distancia_cm, presencia)
-                
                 time.sleep(30)
-
-                for _ in range(10):
-                    angulo_giroscopio = self.leer_giroscopio()
-                    presencia = self.leer_presion()
-                    distancia1 = self.leer_distancia(self.TRIG1, self.ECHO1)
-                    distancia2 = self.leer_distancia(self.TRIG2, self.ECHO2)
-
-                    if self.update_callback:
-                        self.update_callback(angulo_giroscopio, distancia1, distancia2, presencia)
-                time.sleep(0.5)
             
             angulo_promedio, distancia_promedio, presencia_promedio = self.promediar_datos()
             presencia_promedio = bool(round(presencia_promedio))
