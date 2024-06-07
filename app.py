@@ -48,8 +48,11 @@ context_postura.limpiar_postura_temp()  # Limpiar datos temporales al iniciar
 context_postura.set_alert_callback(recorrido_controller.recibir_alerta)
 context_postura.set_update_callback(recorrido_controller.actualizar_datos_sensores)  # Configurar el callback de actualización de datos
 thread = threading.Thread(target=context_postura.mostrar_datos)
-thread = threading.Thread(target=context_postura.procesar_datos)
 thread.daemon = True
 thread.start()
+
+thread_2 = threading.Thread(target=context_postura.procesar_datos)
+thread_2.daemon = True
+thread_2.start()
 
 app.run()
