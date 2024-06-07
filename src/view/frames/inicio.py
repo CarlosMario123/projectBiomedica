@@ -14,7 +14,6 @@ class InicioView(tk.Frame):
         self.addLogos()
         self.label1 = tk.Label(self, text="Monitoreo de Postura para Conducción de Vehículos de Transporte Público de Ruta Prolongada", font=("", 10, "bold"), bg="#F6F5FB", fg="black")
         self.label1.place(x=400, y=10)
-     
 
     def btnAnimate(self):
         self.btn = tk.Button(self, text="INICIAR RECORRIDO", font=("", 15, "bold"), bg="#90EE90", fg="black")
