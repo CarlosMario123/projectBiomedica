@@ -42,7 +42,6 @@ class ContextPostura:
             print('hubo presencia')
             self.presenciaValue = True
         else:
-            print('no hay presencia')
             self.presenciaValue = False
 
 
