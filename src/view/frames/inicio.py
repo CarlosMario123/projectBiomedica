@@ -13,12 +13,12 @@ class InicioView(tk.Frame):
         self.addBackgroudImage()
         self.addLogos()
         self.label1 = tk.Label(self, text="Monitoreo de Postura para Conducción de Vehículos de Transporte Público de Ruta Prolongada", font=("", 11, "bold"), bg="#F6F5FB", fg="black")
-        self.label1.place(x=525, y=10)
+        self.label1.place(x=425, y=10)
      
 
     def btnAnimate(self):
-        self.btn = tk.Button(self, text="Iniciar recorrido", font=("", 18, "bold"), bg="#3DDE19", fg="white")
-        self.btn.place(x=350, y=500, width=200, height=50)
+        self.btn = tk.Button(self, text="INICIAR RECORRIDO", font=("", 15, "bold"), bg="#90EE90", fg="black")
+        self.btn.place(x=450, y=300, width=380, height=180)
         self.btn.config(command=self.controller.redirectDrivers)
 
     def show(self):
@@ -44,7 +44,7 @@ class InicioView(tk.Frame):
 
         # Crear un Label con la imagen y centrarla
         label_img2 = tk.Label(self, image=self.imgtk2)
-        label_img2.place(x=500, y=50)
+        label_img2.place(x=400, y=50)
         
     def addLogos(self):
         self.logo1 = Image.open("img/rs.jpeg")
@@ -60,9 +60,9 @@ class InicioView(tk.Frame):
         label_logo2 = tk.Label(self, image=self.logotk2)
 
         # Obtener el tamaño de la ventana y las imágenes
-        window_height = 720  # Altura de la ventana
+        window_height = 640  # Altura de la ventana
         logo_height = 80   # Altura de los logotipos
 
         # Calcular la posición y colocar los logos en la parte inferior izquierda
-        label_logo1.place(x=10, y=window_height - logo_height - 10)  # Ajusta las coordenadas según sea necesario
-        label_logo2.place(x=120, y=window_height - logo_height - 10)  # Ajusta las coordenadas según sea necesario
+        label_logo1.place(x=30, y=window_height - logo_height - 10)  # Ajusta las coordenadas según sea necesario
+        label_logo2.place(x=140, y=window_height - logo_height - 10)  # Ajusta las coordenadas según sea necesario

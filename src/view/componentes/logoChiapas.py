@@ -27,7 +27,7 @@ class LogoChiapas(tk.Label):
     def update_position(self):
         if self.master:
             window_width = 1200
-            window_height = 720
+            window_height = 640
             image_width = LogoChiapas.image.width()
             image_height = LogoChiapas.image.height()
             x = window_width - image_width - 10  # margen de 10 píxeles desde el borde derecho
