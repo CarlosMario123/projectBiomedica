@@ -36,11 +36,12 @@ class ContextPostura:
         if ContextPostura._instance is None:
             ContextPostura._instance = ContextPostura()
         return ContextPostura._instance
+    
     def callBackPresencia(self,data):
         if(data =='Golpe detectado!'):
-            print('hubo presencia')
             self.presenciaValue = False
         else:
+            print('hubo presencia')
             self.presenciaValue = True
 
     def set_alert_callback(self, callback):
