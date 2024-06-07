@@ -195,6 +195,17 @@ class ContextPostura:
             print(f"Distancia Promediada: {distancia_promedio} cm")
             print(f"Presencia Promediada: {'Sí' if presencia_promedio else 'No'}")
             print(f"Recomendación: {recomendacion}")
+
+            for _ in range(10):
+                angulo_giroscopio = self.leer_giroscopio()
+                presencia = self.leer_presion()
+                distancia1 = self.leer_distancia(self.TRIG1, self.ECHO1)
+                distancia2 = self.leer_distancia(self.TRIG2, self.ECHO2)
+
+                if self.update_callback:
+                    self.update_callback(angulo_giroscopio, distancia1, distancia2, presencia)
+                
+                time.sleep(0.5)
             
             # Comprobar si han pasado 5 horas (18000 segundos)
             # se agregaron 60 segundos para evitar algun desfase
