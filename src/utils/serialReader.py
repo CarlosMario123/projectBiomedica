@@ -57,5 +57,3 @@ class SerialReader:
     def __del__(self):
         """Asegura que la conexi�n serial se cierre al destruir el objeto."""
         self.close()
-
-
