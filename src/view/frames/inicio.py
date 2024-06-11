@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import filedialog
 from PIL import Image, ImageTk
 
 class InicioView(tk.Frame):
@@ -13,6 +14,10 @@ class InicioView(tk.Frame):
         self.addLogos()
         self.label1 = tk.Label(self, text="Monitoreo de Postura para Conducción de Vehículos de Transporte Público de Ruta Prolongada", font=("", 10, "bold"), bg="#F6F5FB", fg="black")
         self.label1.place(x=400, y=10)
+
+        # Botón para exportar datos
+        self.export_button = tk.Button(self, text="Exportar Datos", font=("", 10), command=self.controller.exportar_datos, bg="#1B6FBF", fg="white")
+        self.export_button.place(x=10, y=10)
 
     def btnAnimate(self):
         self.btn = tk.Button(self, text="INICIAR RECORRIDO", font=("", 15, "bold"), bg="#90EE90", fg="black")
@@ -63,4 +68,4 @@ class InicioView(tk.Frame):
 
         # Calcular la posición y colocar los logos en la parte inferior izquierda
         label_logo1.place(x=30, y=window_height - logo_height - 10)  # Ajusta las coordenadas según sea necesario
-        label_logo2.place(x=140, y=window_height - logo_height - 10)  # Ajusta las coordenadas según sea necesario
+        label_logo2.place(x=140, y=window_height - logo_height - 10)  # Ajusta las coordenadas según sea necesario|

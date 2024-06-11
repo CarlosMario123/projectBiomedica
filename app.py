@@ -2,7 +2,7 @@ from src.controller.inicioController import InicioController
 from src.controller.choiseDriveController import ChoiseDriverController
 from src.controller.RecorridoController import RecorridoController
 from bd.CreateTables import createTables
-from src.context.contextPostura import ContextPostura
+# from src.context.contextPostura import ContextPostura
 import tkinter as tk
 import threading
 
@@ -43,16 +43,16 @@ recorrido_controller = app.addFrame(controlador=RecorridoController, clave="reco
 app.asignarPrincipal("inicio")
 
 # Iniciar procesamiento de datos de postura en un hilo separado
-context_postura = ContextPostura.get_instance()
-context_postura.limpiar_postura_temp()  # Limpiar datos temporales al iniciar
-context_postura.set_alert_callback(recorrido_controller.recibir_alerta)
-context_postura.set_update_callback(recorrido_controller.actualizar_datos_sensores)  # Configurar el callback de actualización de datos
-thread = threading.Thread(target=context_postura.mostrar_datos)
-thread.daemon = True
-thread.start()
+# context_postura = ContextPostura.get_instance()
+# context_postura.limpiar_postura_temp()  # Limpiar datos temporales al iniciar
+# context_postura.set_alert_callback(recorrido_controller.recibir_alerta)
+# context_postura.set_update_callback(recorrido_controller.actualizar_datos_sensores)  # Configurar el callback de actualización de datos
+# thread = threading.Thread(target=context_postura.mostrar_datos)
+# thread.daemon = True
+# thread.start()
 
-thread_2 = threading.Thread(target=context_postura.procesar_datos)
-thread_2.daemon = True
-thread_2.start()
+# thread_2 = threading.Thread(target=context_postura.procesar_datos)
+# thread_2.daemon = True
+# thread_2.start()
 
 app.run()
