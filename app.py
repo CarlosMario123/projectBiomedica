@@ -2,7 +2,7 @@ from src.controller.inicioController import InicioController
 from src.controller.choiseDriveController import ChoiseDriverController
 from src.controller.RecorridoController import RecorridoController
 from bd.CreateTables import createTables
-# from src.context.contextPostura import ContextPostura
+from src.context.contextPostura import ContextPostura
 import tkinter as tk
 import threading
 
