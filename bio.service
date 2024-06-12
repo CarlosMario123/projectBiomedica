@@ -1,0 +1,17 @@
+[Unit]
+Description=Start Project91
+
+[Service]
+Environment=DISPLAY=:0
+Environment=XAUTHORITY=/home/pi/.Xauthority
+#ExecStart=/usr/bin/python3 /home/pi/projectBiomedica/
+ExecStart=/bin/bash -c '/usr/bin/python3 /home/pi/clock.py > /home/pi/clock.log 2>&1'
+Restart=always
+RestartSec=10s
+KillMode=process
+TimeoutSec=infinity
+User=pi
+Group=pi
+
+[Install]
+WantedBy=graphical.target
