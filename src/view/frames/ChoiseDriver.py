@@ -1,15 +1,18 @@
+# src/view/componentes/ChoiseDriverView.py
 import tkinter as tk
 from src.view.componentes.logoChiapas import LogoChiapas
 from PIL import Image, ImageTk
+from app import resource_path  # Importar resource_path desde app.py
+
 class ChoiseDriverView(tk.Frame):
-    def __init__(self,master, controller):
+    def __init__(self, master, controller):
         super().__init__(master, bg="#F6F5FB")
         self.controller = controller
         self.image2 = None
-     
+
         self.init_ui()
         print("dentro")
-        
+
     def init_ui(self):
         self.logoChiapa = LogoChiapas().get_instance(master=self)
         self.logoChiapa.lower()
@@ -25,7 +28,7 @@ class ChoiseDriverView(tk.Frame):
         self.label3.place(x=625, y=130)
         self.sectionBtn1()
         self.sectionBtn2()
-        
+
     def sectionBtn1(self):
         self.btns1 = []
         incremento = 200
@@ -53,32 +56,31 @@ class ChoiseDriverView(tk.Frame):
                 btn.lift()  # Asegurarse de que el botón esté al frente
                 self.btns2.append(btn)
                 incremento += 220
-    
+
     def show(self):
-        self.pack(fill=tk.BOTH, expand=True) 
+        self.pack(fill=tk.BOTH, expand=True)
 
     def hide(self):
         self.pack_forget()
 
     def actionBtn(self, text):
         self.controller.selectionOptions(text)
-    
-    
+
     def addBackgroudImage(self):
-        self.img = Image.open("img/fondo.png")
+        self.img = Image.open(resource_path("img/fondo.png"))
         self.img = self.img.resize((490, 380), Image.LANCZOS)
         self.imgtk = ImageTk.PhotoImage(self.img)
 
         # Crear un Label con la imagen y centrarla
         label_img = tk.Label(self, image=self.imgtk, bg="#F6F5FB")
         label_img.place(x=-1, y=-1)
-        
+
     def addLogos(self):
-        self.img1 = Image.open("img/rs.jpeg")
+        self.img1 = Image.open(resource_path("img/rs.jpeg"))
         self.img1 = self.img1.resize((70, 70), Image.LANCZOS)
         self.imgtk1 = ImageTk.PhotoImage(self.img1)
 
-        self.img2 = Image.open("img/ado.jpeg")
+        self.img2 = Image.open(resource_path("img/ado.jpeg"))
         self.img2 = self.img2.resize((70, 70), Image.LANCZOS)
         self.imgtk2 = ImageTk.PhotoImage(self.img2)
 

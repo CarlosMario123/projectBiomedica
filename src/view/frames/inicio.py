@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import filedialog
 from PIL import Image, ImageTk
+from app import resource_path
 
 class InicioView(tk.Frame):
     def __init__(self, master, controller):
@@ -33,7 +34,7 @@ class InicioView(tk.Frame):
         self.pack_forget()
 
     def addBackgroudImage(self):
-        self.img = Image.open("img/fondo.png")
+        self.img = Image.open(resource_path("img/fondo.png"))
         self.img = self.img.resize((490, 380), Image.LANCZOS)
         self.imgtk = ImageTk.PhotoImage(self.img)
 
@@ -41,7 +42,7 @@ class InicioView(tk.Frame):
         label_img = tk.Label(self, image=self.imgtk, bg="#F6F5FB")
         label_img.place(x=-1, y=-1)
 
-        self.img2 = Image.open("img/project91.png")
+        self.img2 = Image.open(resource_path("img/project91.png"))
         self.img2 = self.img2.resize((750, 210), Image.LANCZOS)
         self.imgtk2 = ImageTk.PhotoImage(self.img2)
 
@@ -50,11 +51,11 @@ class InicioView(tk.Frame):
         label_img2.place(x=400, y=50)
         
     def addLogos(self):
-        self.logo1 = Image.open("img/rs.jpeg")
+        self.logo1 = Image.open(resource_path("img/rs.jpeg"))
         self.logo1 = self.logo1.resize((70, 70), Image.LANCZOS)
         self.logotk1 = ImageTk.PhotoImage(self.logo1)
 
-        self.logo2 = Image.open("img/ado.jpeg")
+        self.logo2 = Image.open(resource_path("img/ado.jpeg"))
         self.logo2 = self.logo2.resize((70, 70), Image.LANCZOS)
         self.logotk2 = ImageTk.PhotoImage(self.logo2)
 

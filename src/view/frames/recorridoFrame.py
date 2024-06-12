@@ -2,6 +2,7 @@ import tkinter as tk
 from PIL import Image, ImageTk
 from src.context.contextChofer import ContextChofer
 from datetime import datetime
+from app import resource_path
 
 class LogoChiapas(tk.Label):
     _instance = None
@@ -19,7 +20,7 @@ class LogoChiapas(tk.Label):
         self.doConfig()
 
     def doConfig(self):
-        file = "img/chiapas.png"
+        file = resource_path("img/chiapas.png")
         
         if not LogoChiapas.image:
             LogoChiapas.image = tk.PhotoImage(file=file)
@@ -121,7 +122,7 @@ class RecorridoFrame(tk.Frame):
             self.after(1000, self.changeCronometro)
 
     def abrir_ventana(self, id):
-        ruta = f"img/postura{id}.png"
+        ruta = resource_path(f"img/postura{id}.png")
         self.nueva_ventana = tk.Toplevel(self)
         self.nueva_ventana.title("Sugerencia de Postura")
         self.nueva_ventana.geometry("800x600")
@@ -153,7 +154,7 @@ class RecorridoFrame(tk.Frame):
         self.sensor_labels["presencia"].config(text=f"Presencia: {'Sí' if presencia else 'No'}")
         
     def addBackgroundImage(self):
-        self.img = Image.open("img/fondo.png")
+        self.img = Image.open(resource_path("img/fondo.png"))
         self.img = self.img.resize((490, 380), Image.LANCZOS)
         self.imgtk = ImageTk.PhotoImage(self.img)
 
@@ -162,11 +163,11 @@ class RecorridoFrame(tk.Frame):
         label_img.place(x=-1, y=-1)
         
     def addLogos(self):
-        self.img1 = Image.open("img/rs.jpeg")
+        self.img1 = Image.open(resource_path("img/rs.jpeg"))
         self.img1 = self.img1.resize((70, 70), Image.LANCZOS)
         self.imgtk1 = ImageTk.PhotoImage(self.img1)
 
-        self.img2 = Image.open("img/ado.jpeg")
+        self.img2 = Image.open(resource_path("img/ado.jpeg"))
         self.img2 = self.img2.resize((70, 70), Image.LANCZOS)
         self.imgtk2 = ImageTk.PhotoImage(self.img2)
 

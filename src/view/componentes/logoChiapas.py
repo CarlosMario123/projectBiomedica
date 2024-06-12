@@ -1,4 +1,5 @@
 import tkinter as tk
+from app import resource_path
 
 class LogoChiapas(tk.Label):
     _instance = None
@@ -16,7 +17,7 @@ class LogoChiapas(tk.Label):
         self.doConfig()
 
     def doConfig(self):
-        file = "img/chiapas.png"
+        file = resource_path("img/chiapas.png")
         
         if not LogoChiapas.image:
             LogoChiapas.image = tk.PhotoImage(file=file)
