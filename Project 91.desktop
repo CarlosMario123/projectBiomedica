@@ -2,9 +2,10 @@
 Version=1.0
 Name=Project 91
 Comment=Postura corporal
-Exec=/home/pi/Desktop/projectBiomedica/cronlaunch.sh
-Icon=/home/pi/Documents/project/projectBiomedica/img/occ.png
+Exec=/home/raspberry/Documentos/projectBiomedica/cronlaunch.sh
+Icon=/home/raspberry/Documentos/projectBiomedica/img/chiapas.png
 Terminal=false
 Type=Application
 Categories=Accesories
-Path=/home/pi/Desktop/projectBiomedica/
+Path=/home/raspberry/Documentos/projectBiomedica/
+StartupNotify=false
