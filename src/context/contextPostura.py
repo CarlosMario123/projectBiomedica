@@ -125,8 +125,8 @@ class ContextPostura:
             return 5
 
     def obtener_promedio_ultimas_posturas(self):
-        # ultimas_posturas = obtener_ultimas_posturas_promediadas(10)
-        ultimas_posturas = obtener_ultimas_posturas_promediadas(2)
+        ultimas_posturas = obtener_ultimas_posturas_promediadas(10)
+        # ultimas_posturas = obtener_ultimas_posturas_promediadas(2)
         # en testing se obtienen las ultimas 2 posturas
         if not ultimas_posturas:
             return None, None, None  # Manejar el caso donde no hay suficientes datos
