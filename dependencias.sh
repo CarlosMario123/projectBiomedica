@@ -32,15 +32,17 @@ cd /home/pi/projectBiomedica
 
 # source ./variable/bin/activate
 
-pip install mpu6050 --break-system-packages
-pip install mpu6050-raspberrypi --break-system-packages
+#estos son los buenos, los instalables
+#pip install mpu6050 --break-system-packages
+#pip install mpu6050-raspberrypi --break-system-packages
+#pip install RPi.GPIO --break-system-packages
+#pip install pyserial --break-system-packages
+#pip install tk --break-system-packages
+#pip install scipy --break-system-packages
+#pip install pillow --break-system-packages
+
 #pip install smbus --break-system-packages
-pip install RPi.GPIO --break-system-packages
-pip install pyserial --break-system-packages
 #pip install serial --break-system-packages
-pip install tk --break-system-packages
-pip install scipy --break-system-packages
-pip install pillow --break-system-packages
 
 #activar i2c
 sudo raspi-config
