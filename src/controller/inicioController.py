@@ -5,9 +5,10 @@ from tkinter import filedialog
 from datetime import datetime
 
 class InicioController():
-    def __init__(self, root):
+    def __init__(self, root, base_dir):
         self.root = root
-        self.view = InicioView(master=root, controller=self)
+        self.base_dir = base_dir
+        self.view = InicioView(master=root, controller=self, base_dir=base_dir)
         
     def getView(self):
         self.view.show()

@@ -3,8 +3,8 @@ from bd.chofer.getChofer import obtener_choferes
 from src.context.contextChofer import ContextChofer
 
 class ChoiseDriverController:
-    def __init__(self, root):
-        self.view = ChoiseDriverView(master=root, controller=self)
+    def __init__(self, root, base_dir):
+        self.view = ChoiseDriverView(master=root, controller=self, base_dir=base_dir)
         self.root = root
 
     def obtener_choferes(self):

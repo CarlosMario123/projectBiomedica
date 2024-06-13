@@ -1,3 +1,4 @@
+import os
 from src.controller.inicioController import InicioController
 from src.controller.choiseDriveController import ChoiseDriverController
 from src.controller.RecorridoController import RecorridoController
@@ -7,15 +8,16 @@ import tkinter as tk
 import threading
 
 class Main(tk.Tk):
-    def __init__(self):
+    def __init__(self, base_dir):
         super().__init__()
         self.title("Viaje seguro")
         self.geometry("1200x625")
         self.vistas = {}  # las vistas se gestionan por claves y controladores
         self.principal = None
+        self.base_dir = base_dir  # Guardar la ruta base
     
     def addFrame(self, controlador, clave):
-        controlador_instance = controlador(root=self)
+        controlador_instance = controlador(root=self, base_dir=self.base_dir)
         self.vistas[clave] = controlador_instance
         return controlador_instance  # Devolver la instancia del controlador
         
@@ -36,7 +38,12 @@ class Main(tk.Tk):
 # Datos iniciales de la BD
 createTables()
 
-app = Main()
+# Obtener la ruta base
+base_dir = os.path.dirname(os.path.abspath(__file__))
+
+print("Iniciando aplicación en directorio base: ", base_dir)
+
+app = Main(base_dir=base_dir)
 app.addFrame(controlador=InicioController, clave="inicio")
 app.addFrame(controlador=ChoiseDriverController, clave="choiseD")
 recorrido_controller = app.addFrame(controlador=RecorridoController, clave="recorrido")

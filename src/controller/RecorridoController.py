@@ -1,8 +1,8 @@
 from src.view.frames.recorridoFrame import RecorridoFrame
 class RecorridoController:
-    def __init__(self, root):
+    def __init__(self, root, base_dir):
         self.root = root
-        self.view = RecorridoFrame(controller=self, master=root)
+        self.view = RecorridoFrame(controller=self, master=root, base_dir=base_dir)
         self.mostrando = False
 
     def getView(self):

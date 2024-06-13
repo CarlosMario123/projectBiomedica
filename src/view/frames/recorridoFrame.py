@@ -2,66 +2,23 @@ import tkinter as tk
 from PIL import Image, ImageTk
 from src.context.contextChofer import ContextChofer
 from datetime import datetime
-
-class LogoChiapas(tk.Label):
-    _instance = None
-    image = None
-
-    def __new__(cls, master=None, **kwargs):
-        if not cls._instance:
-            cls._instance = super().__new__(cls)
-            cls._instance.init_singleton(master, **kwargs)
-        return cls._instance
-
-    def init_singleton(self, master=None, **kwargs):
-        tk.Label.__init__(self, master, **kwargs)
-        self.master.bind("<Configure>", self.on_resize)
-        self.doConfig()
-
-    def doConfig(self):
-        file = "img/chiapas.png"
-        
-        if not LogoChiapas.image:
-            LogoChiapas.image = tk.PhotoImage(file=file)
-        
-        self.config(image=LogoChiapas.image, bg="#F6F5FB")
-        self.update_position()
-
-    def update_position(self):
-        if self.master:
-            window_width = 1200
-            window_height = 630
-            image_width = LogoChiapas.image.width()
-            image_height = LogoChiapas.image.height()
-            x = window_width - image_width - 10  # margen de 10 píxeles desde el borde derecho
-            y = window_height - image_height - 10  # margen de 10 píxeles desde el borde inferior
-            self.place(x=x, y=y)
-
-    def on_resize(self, event):
-        self.update_position()
-
-    @staticmethod
-    def get_instance(master=None):
-        if not LogoChiapas._instance:
-            LogoChiapas._instance = LogoChiapas(master)
-        return LogoChiapas._instance
-
+import os
 
 class RecorridoFrame(tk.Frame):
-    def __init__(self, master, controller):
+    def __init__(self, master, controller, base_dir):
         super().__init__(master, bg="#F6F5FB")
         self.controller = controller
+        self.base_dir = base_dir
         self.init_ui()
         self.start_time = None
         self.running = False
+        
+        # Crear instancia de LogoChiapas
+        self.create_logo_chiapas()
 
     def init_ui(self):
         self.addBackgroundImage()
         self.addLogos()
-        
-        # Integrar LogoChiapas directamente en el frame
-        self.logoChiapa = LogoChiapas().get_instance(master=self)
-        self.logoChiapa.lower()
 
         self.label1 = tk.Label(self, text="", font=("", 18, "bold"), height=2)
         self.label1.pack()
@@ -121,14 +78,13 @@ class RecorridoFrame(tk.Frame):
             self.after(1000, self.changeCronometro)
 
     def abrir_ventana(self, id):
-        ruta = f"img/postura{id}.png"
+        ruta = os.path.join(self.base_dir, f"img/postura{id}.png")
         self.nueva_ventana = tk.Toplevel(self)
         self.nueva_ventana.title("Sugerencia de Postura")
         self.nueva_ventana.geometry("800x600")
     
         # Cargar la imagen
         self.img = Image.open(ruta)
-        # self.img = self.img.resize((800, 500), Image.ANTIALIAS)
         self.img = self.img.resize((800, 500), Image.LANCZOS)
         self.imgtk = ImageTk.PhotoImage(self.img)
         
@@ -151,9 +107,10 @@ class RecorridoFrame(tk.Frame):
         self.sensor_labels["distancia1"].config(text=f"Distancia 1: {distancia1} cm")
         self.sensor_labels["distancia2"].config(text=f"Distancia 2: {distancia2} cm")
         self.sensor_labels["presencia"].config(text=f"Presencia: {'Sí' if presencia else 'No'}")
-        
+
     def addBackgroundImage(self):
-        self.img = Image.open("img/fondo.png")
+        image_path = os.path.join(self.base_dir, "img/fondo.png")
+        self.img = Image.open(image_path)
         self.img = self.img.resize((490, 380), Image.LANCZOS)
         self.imgtk = ImageTk.PhotoImage(self.img)
 
@@ -162,11 +119,14 @@ class RecorridoFrame(tk.Frame):
         label_img.place(x=-1, y=-1)
         
     def addLogos(self):
-        self.img1 = Image.open("img/rs.jpeg")
+        img_path1 = os.path.join(self.base_dir, "img/rs.jpeg")
+        img_path2 = os.path.join(self.base_dir, "img/ado.jpeg")
+        
+        self.img1 = Image.open(img_path1)
         self.img1 = self.img1.resize((70, 70), Image.LANCZOS)
         self.imgtk1 = ImageTk.PhotoImage(self.img1)
 
-        self.img2 = Image.open("img/ado.jpeg")
+        self.img2 = Image.open(img_path2)
         self.img2 = self.img2.resize((70, 70), Image.LANCZOS)
         self.imgtk2 = ImageTk.PhotoImage(self.img2)
 
@@ -181,7 +141,27 @@ class RecorridoFrame(tk.Frame):
         # Calcular la posición y colocar los logos en la parte inferior izquierda
         label_logo1.place(x=10, y=window_height - logo_height - 10)  # Ajusta las coordenadas según sea necesario
         label_logo2.place(x=120, y=window_height - logo_height - 10)  # Ajusta las coordenadas según sea necesario
-        
-        # Asegurar que los logos estén al frente
-        label_logo1.tkraise()
-        label_logo2.tkraise()
+
+    def create_logo_chiapas(self):
+        image_path = os.path.join(self.base_dir, "img/chiapas.png")
+        self.logo_chiapas = Image.open(image_path)
+        self.logo_chiapas = self.logo_chiapas.resize((206, 189), Image.LANCZOS)
+        self.logo_chiapas_tk = ImageTk.PhotoImage(self.logo_chiapas)
+
+        # Crear Label para el logo de Chiapas
+        self.label_logoChiapas = tk.Label(self, image=self.logo_chiapas_tk)
+        self.label_logoChiapas.image = self.logo_chiapas_tk  # Guardar una referencia para evitar la recolección de basura
+        self.label_logoChiapas.place(x=960, y=420)  # Ajusta las coordenadas según sea necesario
+        self.label_logoChiapas.config(bg="#F6F5FB")
+
+    def update_position(self):
+        window_width = self.winfo_width()
+        window_height = self.winfo_height()
+        image_width = self.logo_chiapas.width()
+        image_height = self.logo_chiapas.height()
+        x = window_width - image_width - 10  # margen de 10 píxeles desde el borde derecho
+        y = window_height - image_height - 10  # margen de 10 píxeles desde el borde inferior
+        self.label_logoChiapas.place(x=x, y=y)
+
+    def on_resize(self, event):
+        self.update_position()

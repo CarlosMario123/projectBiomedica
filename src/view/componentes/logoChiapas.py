@@ -1,22 +1,24 @@
 import tkinter as tk
+import os
 
 class LogoChiapas(tk.Label):
     _instance = None
     image = None
 
-    def __new__(cls, master=None, **kwargs):
+    def __new__(cls, master=None, base_dir=None, **kwargs):
         if not cls._instance:
             cls._instance = super().__new__(cls)
-            cls._instance.init_singleton(master, **kwargs)
+            cls._instance.init_singleton(master, base_dir, **kwargs)
         return cls._instance
 
-    def init_singleton(self, master=None, **kwargs):
+    def init_singleton(self, master=None, base_dir=None, **kwargs):
         tk.Label.__init__(self, master, **kwargs)
         self.master.bind("<Configure>", self.on_resize)
+        self.base_dir = base_dir
         self.doConfig()
 
     def doConfig(self):
-        file = "img/chiapas.png"
+        file = os.path.join(self.base_dir, "img/chiapas.png")
         
         if not LogoChiapas.image:
             LogoChiapas.image = tk.PhotoImage(file=file)
@@ -26,8 +28,8 @@ class LogoChiapas(tk.Label):
 
     def update_position(self):
         if self.master:
-            window_width = 1200
-            window_height = 630
+            window_width = self.master.winfo_width()
+            window_height = self.master.winfo_height()
             image_width = LogoChiapas.image.width()
             image_height = LogoChiapas.image.height()
             x = window_width - image_width - 10  # margen de 10 píxeles desde el borde derecho
@@ -38,7 +40,7 @@ class LogoChiapas(tk.Label):
         self.update_position()
 
     @staticmethod
-    def get_instance(master=None):
+    def get_instance(master=None, base_dir=None, **kwargs):
         if not LogoChiapas._instance:
-            LogoChiapas._instance = LogoChiapas(master)
+            LogoChiapas._instance = LogoChiapas(master, base_dir=base_dir, **kwargs)
         return LogoChiapas._instance
